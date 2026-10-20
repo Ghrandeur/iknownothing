@@ -13,6 +13,8 @@ test("Vercel serves the public site and routes API requests to the Node function
   ]);
   assert.deepEqual(config.routes, [
     { src: "/api/(.*)", dest: "/api/index.js" },
+    { src: "/index\\.html$", status: 308, dest: "/" },
+    { src: "/(apply|register|login|verify|track|admin|judge|forgot-password|reset-password|contact|privacy|blog|blog-post|gallery)\\.html$", status: 308, dest: "/$1" },
     { src: "/", dest: "/public/index.html" },
     { src: "/apply/?$", dest: "/public/apply.html" },
     { src: "/register/?$", dest: "/public/register.html" },

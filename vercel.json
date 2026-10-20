@@ -16,6 +16,16 @@
       "dest": "/api/index.js"
     },
     {
+      "src": "/index\\.html$",
+      "status": 308,
+      "dest": "/"
+    },
+    {
+      "src": "/(apply|register|login|verify|track|admin|judge|forgot-password|reset-password|contact|privacy|blog|blog-post|gallery)\\.html$",
+      "status": 308,
+      "dest": "/$1"
+    },
+    {
       "src": "/",
       "dest": "/public/index.html"
     },
