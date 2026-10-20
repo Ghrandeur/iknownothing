@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#10120d">
+    <meta name="description" content="NLQI administration, applications and programme operations.">
+    <title>Administration — NLQI</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/api-client.js" defer></script>
+    <script src="/portal.js" defer></script>
+  </head>
+  <body class="apply-page portal-page register-page admin-page">
+    <header class="site-header apply-header">
+      <a class="brand" href="/" aria-label="NLQI home"><img class="brand-logo" src="/images/nlqi-logo.png" alt=""><span>NIGERIA LEGACY QUEEN<br>INTERNATIONAL</span></a>
+      <button class="account-header-action" type="button" id="admin-logout">Sign out <span>↗</span></button>
+    </header>
+    <main>
+      <section class="apply-intro dashboard-intro admin-intro">
+        <div class="apply-intro-inner">
+          <div class="apply-intro-copy">
+            <p class="eyebrow"><span></span> EXECUTIVE OVERVIEW</p>
+            <h1>Lead the<br><em>legacy forward.</em></h1>
+            <p>Manage applications, people and programme operations from one considered workspace.</p>
+          </div>
+          <div class="admin-intro-mark"><span>NLQI</span><strong>IMPACT<br>IN MOTION</strong></div>
+        </div>
+      </section>
+      <div class="apply-shell admin-shell">
+      <section class="admin-overview">
+        <div class="admin-overview-heading"><div><span class="apply-overline">AT A GLANCE</span><h2>Programme overview</h2></div><span class="admin-live-mark"><i></i> LIVE OVERVIEW</span></div>
+        <div class="portal-metrics" id="admin-metrics"></div>
+      </section>
+      <nav class="admin-tabs" aria-label="Administration sections">
+        <button type="button" class="active" data-admin-view="applications">Applications</button>
+        <button type="button" data-admin-view="judges">Judges & scoring</button>
+        <button type="button" data-admin-view="users">Users</button>
+        <button type="button" data-admin-view="analytics">Analytics</button>
+        <button type="button" data-admin-view="content">Site content</button>
+        <button type="button" data-admin-view="finance">Finance</button>
+        <button type="button" data-admin-view="audit">Audit logs</button>
+        <button type="button" data-admin-view="settings">Settings</button>
+      </nav>
+      <section class="application-card portal-card admin-view" id="admin-applications-view">
+        <div class="admin-toolbar">
+          <form id="admin-filter" class="admin-filter">
+            <label class="form-field">Search<input id="filter-search" placeholder="Name, email or reference"></label>
+            <label class="form-field">Status<select id="filter-status"><option value="">All statuses</option><option value="draft">Draft</option><option value="pending">Pending</option><option value="shortlisted">Shortlisted</option><option value="approved">Approved</option><option value="rejected">Rejected</option></select></label>
+            <button class="button button-dark" type="submit">Filter</button>
+          </form>
+          <div class="portal-actions"><button class="button button-quiet" type="button" id="admin-refresh">Refresh</button><button class="button button-quiet" type="button" id="admin-export">Export CSV</button></div>
+        </div>
+        <p id="admin-message" class="form-feedback show" role="status"></p>
+        <div id="admin-applications" class="admin-app-list"></div>
+      </section>
+      <section class="application-card portal-card admin-view" id="admin-judges-view" hidden>
+        <h2>Judge accounts</h2>
+        <form id="judge-invite-form" class="admin-form-grid">
+          <label class="form-field">Judge name<input name="name" required maxlength="120"></label>
+          <label class="form-field">Judge email<input name="email" type="email" required></label>
+          <label class="form-field full">Biography<textarea name="bio" maxlength="2000"></textarea></label>
+          <button class="button button-dark" type="submit">Invite judge</button>
+        </form>
+        <div id="judge-list" class="admin-app-list"></div>
+        <hr>
+        <h2>Assign an application</h2>
+        <form id="assignment-form" class="admin-form-grid">
+          <label class="form-field">Judge<select name="judgeId" id="assignment-judge" required></select></label>
+          <label class="form-field">Application<select name="applicationId" id="assignment-application" required></select></label>
+          <button class="button button-dark" type="submit">Assign application</button>
+        </form>
+        <div id="scoring-summary" class="admin-app-list"></div>
+      </section>
+      <section class="application-card portal-card admin-view" id="admin-users-view" hidden>
+        <h2>Account management</h2>
+        <p>Manage applicant and judge access. Administrator privileges are managed through the server environment.</p>
+        <div id="admin-users" class="admin-app-list"></div>
+      </section>
+      <section class="application-card portal-card admin-view" id="admin-analytics-view" hidden>
+        <h2>Application analytics</h2>
+        <div id="analytics-ratios" class="portal-metrics"></div>
+        <div class="analytics-grid">
+          <article><h3>Applications by state</h3><div id="analytics-states"></div></article>
+          <article><h3>Applications by age</h3><div id="analytics-ages"></div></article>
+          <article><h3>Applications by month</h3><div id="analytics-months"></div></article>
+        </div>
+      </section>
+      <section class="application-card portal-card admin-view" id="admin-content-view" hidden>
+        <h2>Website content</h2>
+        <label class="form-field">Collection<select id="content-type"><option value="gallery">Gallery</option><option value="blog">Blog articles</option><option value="sponsors">Sponsors</option><option value="partners">Partners</option></select></label>
+        <form id="content-form" class="admin-form-grid"></form>
+        <button id="content-cancel" class="button button-quiet" type="button" hidden>Cancel edit</button>
+        <div id="content-list" class="admin-app-list"></div>
+      </section>
+      <section class="application-card portal-card admin-view" id="admin-finance-view" hidden>
+        <h2>Finance overview</h2>
+        <div id="finance-metrics" class="portal-metrics"></div>
+        <form id="finance-filter" class="admin-filter">
+          <label class="form-field">Search<input id="finance-search" placeholder="Reference, applicant or email"></label>
+          <label class="form-field">Payment status<select id="finance-status"><option value="">All statuses</option><option value="pending">Pending</option><option value="paid">Paid</option><option value="failed">Failed</option><option value="refunded">Refunded</option></select></label>
+          <button class="button button-dark" type="submit">Filter</button>
+          <button class="button button-quiet" id="finance-export" type="button">Export payments CSV</button>
+        </form>
+        <div id="finance-list" class="admin-app-list"></div>
+      </section>
+      <section class="application-card portal-card admin-view" id="admin-audit-view" hidden>
+        <h2>Audit trail</h2>
+        <form id="audit-filter" class="admin-filter">
+          <label class="form-field">Action<input id="audit-action" placeholder="e.g. application.submitted"></label>
+          <label class="form-field">User<input id="audit-actor" placeholder="Name or email"></label>
+          <button class="button button-dark" type="submit">Filter logs</button>
+        </form>
+        <div id="audit-list" class="admin-app-list"></div>
+      </section>
+      <section class="application-card portal-card admin-view" id="admin-settings-view" hidden>
+        <h2>Service configuration</h2>
+        <p>Secrets are never displayed here. Change credentials and operational settings in the server environment, then restart the service.</p>
+        <div id="settings-list" class="settings-grid"></div>
+      </section>
+      </div>
+    </main>
+    <script src="/admin.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#10120d">
+    <meta name="description" content="Review and score assigned NLQI applications.">
+    <title>Judge portal — NLQI</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/api-client.js" defer></script>
+    <script src="/portal.js" defer></script>
+    <script src="/judge.js" defer></script>
+  </head>
+  <body class="apply-page portal-page register-page judge-page">
+    <header class="site-header apply-header">
+      <a class="brand" href="/" aria-label="NLQI home">
+        <img class="brand-logo" src="/images/nlqi-logo.png" alt="">
+        <span>NIGERIA LEGACY QUEEN<br>INTERNATIONAL</span>
+      </a>
+      <button class="account-header-action" id="judge-logout" type="button">Sign out <span>↗</span></button>
+    </header>
+    <main>
+      <section class="apply-intro dashboard-intro">
+        <div class="apply-intro-inner">
+          <div class="apply-intro-copy">
+            <p class="eyebrow"><span></span> JUDGING PORTAL</p>
+            <h1>Review with<br><em>intention.</em></h1>
+            <p>Thoughtful insight helps us recognize the women shaping a more purposeful future.</p>
+          </div>
+        </div>
+      </section>
+      <div class="apply-shell judge-shell">
+        <div class="judge-layout">
+          <aside class="apply-journey register-journey judge-guide">
+            <div class="journey-topline"><span class="apply-overline">THE REVIEW PROCESS</span><span>NLQI / JURY</span></div>
+            <h2>See beyond<br><em>the first impression.</em></h2>
+            <p>Review each assigned application with care and score every criterion consistently.</p>
+            <div class="journey-points">
+              <div><span>01</span><p><strong>Read the story</strong><small>Open an application to review responses</small></p></div>
+              <div><span>02</span><p><strong>Score with care</strong><small>Rate each criterion from 1 to 10</small></p></div>
+              <div><span>03</span><p><strong>Save your review</strong><small>Your scores can be updated later</small></p></div>
+            </div>
+          </aside>
+          <section class="judge-workspace">
+            <div class="application-card portal-card judge-overview">
+              <span class="apply-overline">ASSIGNED TO YOU</span>
+              <h2>Applicant reviews</h2>
+              <p>Use the applicant’s responses and your professional judgment to complete each review.</p>
+              <div id="judge-message" class="form-feedback show" role="status" aria-live="polite">Your assigned applications will appear below.</div>
+            </div>
+            <div id="judge-assignments" class="judge-assignments" aria-live="polite">
+              <article class="application-card portal-card"><p>Loading assigned applications…</p></article>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+    <footer class="site-footer"><div class="footer-bottom"><span>© <span id="year"></span> Nigeria Legacy Queen International</span></div></footer>
+  </body>
+</html>

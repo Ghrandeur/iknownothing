@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#10120d">
+    <meta name="description" content="Create your Nigeria Legacy Queen International applicant account and begin your journey.">
+    <title>Create an account — NLQI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/api-client.js" defer></script>
+    <script src="/portal.js" defer></script>
+  </head>
+  <body class="apply-page portal-page register-page">
+    <header class="site-header apply-header">
+      <a class="brand" href="/" aria-label="NLQI home">
+        <img class="brand-logo" src="/images/nlqi-logo.png" alt="">
+        <span>NIGERIA LEGACY QUEEN<br>INTERNATIONAL</span>
+      </a>
+      <a class="apply-home-link" href="/">Back to home <span>↖</span></a>
+    </header>
+    <main>
+      <section class="apply-intro">
+        <div class="apply-intro-inner">
+          <div class="apply-intro-copy">
+            <p class="eyebrow"><span></span> YOUR NEXT CHAPTER STARTS HERE</p>
+            <h1>Make space<br>for <em>your purpose.</em></h1>
+            <p>Create your applicant account to share your story, save your progress and stay connected throughout your NLQI journey.</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="apply-shell">
+        <div class="application-layout register-layout">
+          <aside class="apply-journey register-journey" aria-label="Your applicant account">
+            <div class="journey-topline">
+              
+            </div>
+            <h2>Start with <em>your story.</em></h2>
+            <p>Your account gives you one secure place to build your application and follow each step of the experience.</p>
+            <div class="journey-points">
+              <div><span>01</span><p><strong>Create your account</strong><small>Set up your secure applicant profile</small></p></div>
+              <div><span>02</span><p><strong>Verify your email</strong><small>Confirm it’s really you</small></p></div>
+              <div><span>03</span><p><strong>Begin your application</strong><small>Share your story at your pace</small></p></div>
+            </div>
+            <div class="journey-privacy">
+              <span aria-hidden="true">◈</span>
+              <p><strong>Your details are protected.</strong><br>Your account information and application are kept private and used to support your NLQI journey.</p>
+            </div>
+          </aside>
+
+          <section class="application-card portal-card register-card">
+            <div class="register-card-heading">
+              <span class="apply-overline"></span>
+              <h2>Create your account.</h2>
+              <p>It only takes a moment to get started.</p>
+            </div>
+            <form id="register-form">
+              <label class="form-field">Full name<input name="name" autocomplete="name" required minlength="2" maxlength="120" placeholder="Enter your full name"></label>
+              <label class="form-field">Email address<input name="email" type="email" autocomplete="email" required maxlength="254" placeholder="you@example.com"></label>
+              <label class="form-field">Password<input name="password" type="password" autocomplete="new-password" required minlength="12" maxlength="128" placeholder="Create a secure password"><small>Use at least 12 characters.</small></label>
+              <label class="form-field">Confirm password<input name="confirmPassword" type="password" autocomplete="new-password" required minlength="12" maxlength="128" placeholder="Enter your password again"></label>
+              <button class="button button-dark register-submit" type="submit">Create account <span>↗</span></button>
+              <div class="form-feedback" data-message aria-live="polite"></div>
+            </form>
+            <p class="portal-switch">By creating an account, you acknowledge the <a href="/privacy">applicant privacy notice</a>.</p>
+            <p class="portal-switch register-signin">Already have an account? <a href="/login">Sign in</a></p>
+            <div class="register-divider"><span>ACCOUNT HELP</span></div>
+            <form id="resend-form" class="resend-form">
+              <strong>Need another verification email?</strong>
+              <p>Enter the email address linked to your account and we’ll send a new link.</p>
+              <label class="form-field">Account email<input name="email" type="email" autocomplete="email" required placeholder="you@example.com"></label>
+              <button class="button button-quiet" type="submit">Resend verification link <span>→</span></button>
+            </form>
+          </section>
+        </div>
+      </div>
+    </main>
+    <footer class="site-footer">
+      <div class="footer-bottom">
+        <span>© <span id="year"></span> Nigeria Legacy Queen International</span>
+      </div>
+    </footer>
+  </body>
+</html>

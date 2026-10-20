@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-nlqi-green: #004d2b;
+  --color-nlqi-green-dark: #00331d;
+  --color-nlqi-gold: #d8ad3f;
+  --color-nlqi-gold-light: #f0d78a;
+  --color-nlqi-cream: #faf8f3;
+  --color-nlqi-charcoal: #1a1a1a;
+  --color-nlqi-blue: #0a0e3d;
+  --color-nlqi-orange: #f97316;
+}
+
+:root {
+  --font-body: 'Inter', sans-serif;
+  --font-heading: 'Playfair Display', serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: #faf8f3;
+  color: #1a1a1a;
+}
+
+.page-wrapper {
+  width: 100%;
+}
+
+html, body {
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.gold-gradient {
+  background: linear-gradient(135deg, #d8ad3f 0%, #f0d78a 50%, #d8ad3f 100%);
+}
+
+.orange-gradient {
+  background: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
+}
+
+.text-gold-gradient {
+  background: linear-gradient(135deg, #d8ad3f, #f0d78a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+::selection {
+  background: #d8ad3f;
+  color: #00331d;
+}
+
+:focus-visible {
+  outline: 2px solid #d8ad3f;
+  outline-offset: 3px;
+}
+
+.editorial-label {
+  color: #a58225;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.photo-grain {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.2) 0.55px, transparent 0.55px);
+  background-size: 5px 5px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

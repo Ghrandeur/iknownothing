@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#10120d">
+    <meta name="description" content="View your Nigeria Legacy Queen International application and updates.">
+    <title>Applicant portal — NLQI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="/styles.css" rel="stylesheet">
+    <script src="/api-client.js" defer></script>
+    <script src="/portal.js" defer></script>
+  </head>
+  <body class="apply-page portal-page register-page track-page">
+    <header class="site-header apply-header">
+      <a class="brand" href="/" aria-label="NLQI home">
+        <img class="brand-logo" src="/images/nlqi-logo.png" alt="">
+        <span>NIGERIA LEGACY QUEEN<br>INTERNATIONAL</span>
+      </a>
+      <button class="account-header-action" type="button" id="logout-button">Sign out <span>↗</span></button>
+    </header>
+    <main>
+      <section class="apply-intro dashboard-intro">
+        <div class="apply-intro-inner">
+          <div class="apply-intro-copy">
+            <p class="eyebrow"><span></span> APPLICANT PORTAL</p>
+            <h1>Welcome,<br><em id="track-name">applicant.</em></h1>
+            <p id="track-email">Your NLQI journey, application status and updates in one place.</p>
+          </div>
+        </div>
+      </section>
+      <div class="apply-shell">
+        <div class="application-layout register-layout track-layout">
+          <aside class="apply-journey register-journey">
+           
+            <h2>Keep your<br><em>purpose moving.</em></h2>
+            <p>Your portal is the home for application progress, important messages and next steps.</p>
+            <div class="journey-points">
+              <div><span>01</span><p><strong>Your application</strong><small>Reference, review and progress</small></p></div>
+              <div><span>02</span><p><strong>Application fee</strong><small>Secure payment when ready</small></p></div>
+              <div><span>03</span><p><strong>Notifications</strong><small>Updates from the NLQI team</small></p></div>
+            </div>
+            <div class="journey-privacy">
+              <span aria-hidden="true">◈</span>
+              <p><strong>Have a question?</strong><br><a href="/contact">Contact the NLQI team</a> for help with your application.</p>
+            </div>
+          </aside>
+          <div class="track-content">
+            <section class="application-card portal-card track-application">
+              <div class="register-card-heading">
+               
+                <h2>Your next chapter.</h2>
+                <p>Here’s where your application stands today.</p>
+              </div>
+              <dl class="portal-details track-details">
+                <dt>Application reference</dt><dd id="track-number">Loading…</dd>
+                <dt>Review status</dt><dd id="track-status">Loading…</dd>
+                <dt>Payment status</dt><dd id="track-payment">unpaid</dd>
+              </dl>
+              <p class="portal-switch track-payment-message" id="payment-message" role="status" aria-live="polite" hidden></p>
+              <div class="portal-actions track-actions">
+                <a class="button button-dark" href="/apply">Continue application <span>↗</span></a>
+                <button class="button button-quiet" id="pay-now" type="button">Pay application fee <span>→</span></button>
+              </div>
+            </section>
+            <section class="application-card portal-card track-notifications">
+              <div class="register-card-heading">
+                <span class="apply-overline">STAY IN THE KNOW</span>
+                <h2>Notifications</h2>
+                <p>Important messages and updates about your NLQI journey.</p>
+              </div>
+              <div id="notification-list" class="notification-list"></div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="site-footer"><div class="footer-bottom"><span>© <span id="year"></span> Nigeria Legacy Queen International</span><a href="/"</a></div></footer>
+  </body>
+</html>

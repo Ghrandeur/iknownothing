@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#10120d">
+    <meta name="description" content="Explore the Nigeria Legacy Queen International contestant application journey.">
+    <title>Apply — Nigeria Legacy Queen International</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/api-client.js" defer></script>
+    <script src="/app.js" defer></script>
+  </head>
+  <body class="apply-page">
+    <header class="site-header apply-header">
+      <a class="brand" href="/" aria-label="NLQI home">
+        <img class="brand-logo" src="/images/nlqi-logo.png" alt="">
+        <span>NIGERIA LEGACY QUEEN<br>INTERNATIONAL</span>
+      </a>
+      <a class="apply-home-link" href="/">Back to home <span>↖</span></a>
+    </header>
+    <main>
+      <div class="apply-intro">
+        <div class="apply-intro-inner">
+          <div class="apply-intro-copy">
+            <p class="eyebrow"><span></span> YOUR NEXT CHAPTER STARTS HERE</p>
+            <h1>Bring your purpose<br><em>to the platform.</em></h1>
+            <p>Tell us about your journey, your vision and the change you want to lead. Your progress is saved securely to your account.</p>
+            
+          </div>y
+          
+       
+          </div>
+        </div>
+      </div>
+      <div class="apply-shell">
+        <div class="apply-auth-gate" id="apply-auth-gate">
+          <div class="auth-gate-mark" aria-hidden="true">↗</div>
+          <div class="auth-gate-copy">
+            <span class="apply-overline">A SECURE SPACE FOR YOUR STORY</span>
+            <strong>Sign in to begin your application.</strong>
+            <p>An applicant account is required to securely save your answers and documents.</p>
+          </div>
+          <div class="auth-gate-actions">
+            <a class="button button-dark" href="/register">Create applicant account <span>↗</span></a>
+            <a class="text-link" href="/login">Already registered? Sign in</a>
+          </div>
+        </div>
+        <p class="demo-notice" id="apply-account" hidden></p>
+        <div class="application-layout">
+          <aside class="apply-journey" aria-label="Application guidance">
+            <div class="journey-topline"><span class="apply-overline"></span><span></span></div>
+            <h2>A little about <em>the process.</em></h2>
+            <p>Move at your own pace. Your progress is saved as you go, so you can return whenever you’re ready.</p>
+            <div class="journey-points">
+              <div><span>01</span><p><strong>Tell us about you</strong><small>Your background and experience</small></p></div>
+              <div><span>02</span><p><strong>Share your story</strong><small>The moments that shaped you</small></p></div>
+              <div><span>03</span><p><strong>Show us your vision</strong><small>The change you want to lead</small></p></div>
+              <div><span>04</span><p><strong>Review & submit</strong><small>One last look before you begin</small></p></div>
+            </div>
+            <div class="journey-privacy"><span aria-hidden="true">◈</span><p><strong>Your story stays yours.</strong><br>Your application and documents are stored securely and only shared with authorised NLQI reviewers.</p></div>
+          </aside>
+          <div class="application-card" hidden>
+            <div class="application-progress">
+              <div class="progress-heading"><span>APPLICATION PROGRESS</span><strong><span id="current-step">01</span><i> / 04</i></strong></div>
+              <div class="progress-track" role="progressbar" aria-label="Application progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="25"><span id="step-progress-fill"></span></div>
+              <p class="progress-copy" id="step-progress">25% complete</p>
+            </div>
+            <div class="step-labels" aria-label="Application steps">
+              <button class="step-label active" type="button" data-step-link="0" aria-current="step"><i>01</i><span>About you</span></button>
+              <button class="step-label" type="button" data-step-link="1" disabled><i>02</i><span>Your story</span></button>
+              <button class="step-label" type="button" data-step-link="2" disabled><i>03</i><span>Your vision</span></button>
+              <button class="step-label" type="button" data-step-link="3" disabled><i>04</i><span>Review</span></button>
+            </div>
+            <form id="application-form">
+          <section class="form-step active">
+            <div class="form-step-heading"><span class="apply-overline">CHAPTER 01 / THE PERSON BEHIND THE PURPOSE</span><span class="step-counter">01 <i>/ 04</i></span></div>
+            <h2>Let’s start with you.</h2>
+            <p class="form-step-lead">A little about the person behind the purpose.</p>
+            <div class="form-grid">
+              <label class="form-field">First name<input name="firstName" autocomplete="given-name" required></label>
+              <label class="form-field">Last name<input name="lastName" autocomplete="family-name" required></label>
+              <label class="form-field">Title<select name="title"><option value="">Select</option><option>Ms</option><option>Mrs</option><option>Miss</option><option>Dr</option><option>Other</option></select></label>
+              <label class="form-field">Other names<input name="otherNames"></label>
+              <label class="form-field">Phone number<input name="phone" type="tel" autocomplete="tel" required></label>
+              <label class="form-field">Date of birth<input name="dateOfBirth" type="date" required></label>
+              <label class="form-field">Age<input name="age" type="number" min="18" max="80"></label>
+              <label class="form-field">State of origin<select name="state" required><option value="">Choose your state</option><option>Abia</option><option>Adamawa</option><option>Akwa Ibom</option><option>Anambra</option><option>Bauchi</option><option>Bayelsa</option><option>Benue</option><option>Borno</option><option>Cross River</option><option>Delta</option><option>Ebonyi</option><option>Edo</option><option>Ekiti</option><option>Enugu</option><option>Federal Capital Territory</option><option>Gombe</option><option>Imo</option><option>Jigawa</option><option>Kaduna</option><option>Kano</option><option>Katsina</option><option>Kebbi</option><option>Kogi</option><option>Kwara</option><option>Lagos</option><option>Nasarawa</option><option>Niger</option><option>Ogun</option><option>Ondo</option><option>Osun</option><option>Oyo</option><option>Plateau</option><option>Rivers</option><option>Sokoto</option><option>Taraba</option><option>Yobe</option><option>Zamfara</option></select></label>
+              <label class="form-field">Local government area<input name="lga"></label>
+              <label class="form-field">Nationality<input name="nationality" value="Nigerian"></label>
+              <label class="form-field">City<input name="city" autocomplete="address-level2"></label>
+              <label class="form-field">Residential address<input name="residentialAddress" autocomplete="street-address"></label>
+              <label class="form-field full">What do you do?<input name="occupation" placeholder="Your work, studies, or calling"></label>
+              <label class="form-field">Education level<select name="educationLevel"><option value="">Select</option><option>Secondary</option><option>Diploma</option><option>Bachelor's degree</option><option>Postgraduate</option><option>Other</option></select></label>
+              <label class="form-field">Institution<input name="institution"></label>
+              <label class="form-field">Course of study<input name="courseOfStudy"></label>
+              <label class="form-field">Graduation year<input name="graduationYear" inputmode="numeric"></label>
+            </div>
+            <div class="form-nav"><span></span><button class="button button-dark" type="button" data-next>Continue <span>→</span></button></div>
+          </section>
+          <section class="form-step">
+            <div class="form-step-heading"><span class="apply-overline">CHAPTER 02 / THE EXPERIENCES THAT SHAPED YOU</span><span class="step-counter">02 <i>/ 04</i></span></div>
+            <h2>Tell us your story.</h2>
+            <p class="form-step-lead">Every journey begins somewhere. We’d love to hear yours.</p>
+            <div class="form-grid">
+              <label class="form-field full">What inspired you to apply to NLQI?<textarea name="motivation" required minlength="20" placeholder="Share what brings you here…"></textarea></label>
+              <label class="form-field full">What experience has shaped the woman you are today?<textarea name="experience" required minlength="20" placeholder="The moments, people, and lessons that made a difference…"></textarea></label>
+              <label class="form-field full">What are you most proud of?<textarea name="proudestMoment" placeholder="A project, a personal milestone, or something you made happen…"></textarea></label>
+              <label class="form-field">Height<input name="height" placeholder="e.g. 170"></label>
+              <label class="form-field">Height units<select name="heightUnits"><option value="">Select</option><option>cm</option><option>ft/in</option></select></label>
+              <label class="form-field">Bust measurement<input name="bust"></label>
+              <label class="form-field">Waist measurement<input name="waist"></label>
+              <label class="form-field">Hip measurement<input name="hips"></label>
+              <label class="form-field">Dress size<input name="dressSize"></label>
+              <label class="form-field">Hair colour<input name="hairColor"></label>
+              <label class="form-field">Eye colour<input name="eyeColor"></label>
+              <label class="form-field full">Talents<textarea name="talents"></textarea></label>
+              <label class="form-field">Hobbies<input name="hobbies"></label>
+              <label class="form-field">Languages spoken<input name="languages"></label>
+              <label class="form-field">Additional language<input name="additionalLanguage"></label>
+              <label class="form-field">Social media profile<input name="socialMedia" placeholder="Optional public profile URL"></label>
+              <label class="form-field">How did you hear about NLQI?<input name="platformSource"></label>
+            </div>
+            <div class="form-nav"><button class="button button-quiet" type="button" data-back><span>←</span> Back</button><button class="button button-dark" type="button" data-next>Continue <span>→</span></button></div>
+          </section>
+          <section class="form-step">
+            <div class="form-step-heading"><span class="apply-overline">CHAPTER 03 / YOUR PURPOSE IN ACTION</span><span class="step-counter">03 <i>/ 04</i></span></div>
+            <h2>What change would you lead?</h2>
+            <p class="form-step-lead">Purpose starts with a cause you care about and a first step you can take.</p>
+            <div class="form-grid">
+              <label class="form-field">Your advocacy focus<select name="advocacy" required><option value="">Choose a focus</option><option>Education</option><option>Mental wellbeing</option><option>Women’s opportunity</option><option>Youth development</option><option>Community service</option><option>Other</option></select></label>
+              <label class="form-field">Where would you begin?<input name="community" placeholder="Your community or audience"></label>
+              <label class="form-field full">Describe the change you hope to make<textarea name="impactIdea" required minlength="20" placeholder="What would you like to see change, and how might you start?"></textarea></label>
+              <label class="form-field full">What would you bring to the NLQI community?<textarea name="contribution" placeholder="Your skills, ideas, and the way you like to work with others…"></textarea></label>
+              <label class="form-field full">Why do you want to participate?<textarea name="whyParticipate"></textarea></label>
+              <label class="form-field full">Tell us about your advocacy interests<textarea name="advocacyInterest"></textarea></label>
+              <label class="form-field full">Describe a community project you would lead<textarea name="communityProject"></textarea></label>
+              <label class="form-field full">Describe your leadership experience<textarea name="leadershipExperience"></textarea></label>
+              <label class="form-field full">What social impact have you made?<textarea name="socialImpact"></textarea></label>
+              <label class="form-field full">What are your career goals?<textarea name="careerGoals"></textarea></label>
+              <label class="form-field">Emergency contact name<input name="emergencyName"></label>
+              <label class="form-field">Emergency contact phone<input name="emergencyPhone" type="tel"></label>
+              <label class="form-field">Relationship to emergency contact<input name="emergencyRelationship"></label>
+              <label class="form-field">Guardian consent (if applicable)<select name="guardianConsent"><option value="">Select</option><option value="not-applicable">Not applicable</option><option value="provided">Provided</option></select></label>
+              <label class="form-field upload-field" data-upload-card><span class="upload-icon" aria-hidden="true">＋</span><span class="upload-title">Headshot <i>OPTIONAL</i></span><span class="upload-hint">A clear portrait · JPG or PNG</span><input name="headshot" type="file" accept="image/png,image/jpeg"><span class="upload-selected" aria-live="polite">Choose a photo or drop it here</span></label>
+              <label class="form-field upload-field" data-upload-card><span class="upload-icon" aria-hidden="true">＋</span><span class="upload-title">Full-body photo <i>OPTIONAL</i></span><span class="upload-hint">A recent full-length photo · JPG or PNG</span><input name="fullBody" type="file" accept="image/png,image/jpeg"><span class="upload-selected" aria-live="polite">Choose a photo or drop it here</span></label>
+              <label class="form-field upload-field full" data-upload-card><span class="upload-icon" aria-hidden="true">＋</span><span class="upload-title">Identity document <i>OPTIONAL</i></span><span class="upload-hint">A valid ID document · PDF, JPG or PNG</span><input name="identityDocument" type="file" accept="application/pdf,image/png,image/jpeg"><span class="upload-selected" aria-live="polite">Choose a document or drop it here</span></label>
+            </div>
+            <div class="form-nav"><button class="button button-quiet" type="button" data-back><span>←</span> Back</button><button class="button button-dark" type="button" data-next>Review <span>→</span></button></div>
+          </section>
+          <section class="form-step">
+            <div class="form-step-heading"><span class="apply-overline">CHAPTER 04 / YOUR APPLICATION</span><span class="step-counter">04 <i>/ 04</i></span></div>
+            <h2>Take a moment to review.</h2>
+            <p class="form-step-lead">Confirm that your answers are accurate before you submit.</p>
+            <div class="review-box"><span class="review-icon" aria-hidden="true">✳</span><div><strong>Your application, your next chapter.</strong><br>Answers and uploaded documents are stored in your private applicant account. Documents are only available to you and authorised NLQI administrators. Your application reference will appear here after submission.</div></div>
+            <label class="consent"><input type="checkbox" name="termsAgreed" value="true" required><span>I confirm that the information provided is accurate and have read the <a href="/privacy" target="_blank" rel="noopener">applicant privacy notice</a>.</span></label>
+            <div class="form-nav"><button class="button button-quiet" type="button" data-back><span>←</span> Back</button><button class="button button-quiet" type="button" id="save-draft">Save draft</button><button class="button button-dark" type="submit">Submit application <span>↗</span></button></div>
+            <div class="form-feedback" id="form-feedback" role="status" aria-live="polite"></div>
+          </section>
+        </form>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="site-footer"><div class="footer-bottom"><span>© <span id="year"></span> Nigeria Legacy Queen International</span></div></footer>
+    <script src="/portal.js" defer></script>
+  </body>
+</html>

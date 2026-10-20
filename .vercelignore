@@ -1,0 +1,10 @@
+.env
+.env.*
+!.env.example
+env2
+.vercel
+node_modules
+data
+uploads
+coverage
+test

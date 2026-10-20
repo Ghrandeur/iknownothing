@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#10120d">
+    <meta name="description" content="Sign in to your Nigeria Legacy Queen International applicant portal.">
+    <title>Sign in — NLQI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/api-client.js" defer></script>
+    <script src="/portal.js" defer></script>
+  </head>
+  <body class="apply-page portal-page register-page login-page">
+    <header class="site-header apply-header">
+      <a class="brand" href="/" aria-label="NLQI home">
+        <img class="brand-logo" src="/images/nlqi-logo.png" alt="">
+        <span>NIGERIA LEGACY QUEEN<br>INTERNATIONAL</span>
+      </a>
+      <a class="apply-home-link" href="/">Back to home <span>↖</span></a>
+    </header>
+    <main>
+      <section class="apply-intro">
+        <div class="apply-intro-inner">
+          <div class="apply-intro-copy">
+            <p class="eyebrow"><span></span> WELCOME BACK</p>
+            <h1>Your next chapter<br>is <em>waiting.</em></h1>
+            <p>Sign in to continue your application, check your updates and keep moving toward the change you want to lead.</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="apply-shell">
+        <div class="application-layout register-layout">
+          <aside class="apply-journey register-journey" aria-label="Your NLQI portal">
+            <div class="journey-topline">
+             
+            </div>
+            <h2>Pick up<br><em>where you left off.</em></h2>
+            <p>Your applicant portal keeps your journey, application and important updates together.</p>
+            <div class="journey-points">
+              <div><span>01</span><p><strong>Sign in securely</strong><small>Use the email linked to your account</small></p></div>
+              <div><span>02</span><p><strong>Continue your application</strong><small>Return to your saved progress</small></p></div>
+              <div><span>03</span><p><strong>Stay in the know</strong><small>View your latest application updates</small></p></div>
+            </div>
+            <div class="journey-privacy">
+              <span aria-hidden="true">◈</span>
+              <p><strong>Your account stays protected.</strong><br>Sign in to access your private application and applicant updates.</p>
+            </div>
+          </aside>
+
+          <section class="application-card portal-card register-card login-card">
+            <div class="register-card-heading">
+              <span class="apply-overline">YOUR APPLICANT ACCOUNT</span>
+              <h2>Good to have you back.</h2>
+              <p>Enter your details to continue to your NLQI portal.</p>
+            </div>
+            <form id="login-form">
+              <label class="form-field">Email address<input name="email" type="email" autocomplete="username" required placeholder="you@example.com"></label>
+              <label class="form-field">Password<input name="password" type="password" autocomplete="current-password" required placeholder="Enter your password"></label>
+              <button class="button button-dark register-submit" type="submit">Sign in <span>↗</span></button>
+              <div class="form-feedback" data-message aria-live="polite"></div>
+            </form>
+            <div class="login-links">
+              <a href="/forgot-password">Forgot your password? <span>Reset it ↗</span></a>
+              <p>New to NLQI? <a href="/register">Create an applicant account</a></p>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+    <footer class="site-footer">
+      <div class="footer-bottom">
+        <span>© <span id="year"></span> Nigeria Legacy Queen International</span>
+      </div>
+    </footer>
+  </body>
+</html>
