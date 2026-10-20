@@ -28,6 +28,7 @@ In Vercel **Project → Settings → General**, set **Root Directory** to the pr
 2. In Supabase **Project Settings → Database**, copy the PostgreSQL connection string intended for serverless/pooler use. In **Project Settings → API**, copy the project URL and the server-only `service_role` secret. Never expose the service-role secret in browser code or commit it.
 3. In Vercel **Project → Settings → Environment Variables**, configure:
    - `SUPABASE_DB_URL` — pooled PostgreSQL connection string
+   - `SUPABASE_DB_CA_CERT` — the PEM root certificate downloaded from Supabase **Database Settings → SSL Configuration**. This keeps database TLS verification enabled.
    - `SUPABASE_URL` — Supabase project URL
    - `SUPABASE_SERVICE_ROLE_KEY` — server-only service-role secret
    - `SUPABASE_STORAGE_BUCKET` — `nlqi-applicant-documents`

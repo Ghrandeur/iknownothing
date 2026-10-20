@@ -13,6 +13,25 @@ function normalizePostgresSql(sql) {
     .replace(/\?/g, (_match, offset) => `$${normalizePostgresSql.parameterIndex++}`);
 }
 
+function createPostgresPoolOptions(connectionString, caCertificate = "") {
+  const parsedConnectionString = new URL(connectionString);
+  for (const parameter of ["sslmode", "sslcert", "sslkey", "sslrootcert"]) {
+    parsedConnectionString.searchParams.delete(parameter);
+  }
+  const ca = caCertificate.replace(/\\n/g, "\n").trim();
+
+  return {
+    connectionString: parsedConnectionString.toString(),
+    ssl: connectionString.includes("localhost") ? false : {
+      rejectUnauthorized: true,
+      ...(ca ? { ca } : {}),
+    },
+    max: Number(process.env.PG_POOL_MAX || 5),
+    idleTimeoutMillis: 10000,
+    connectionTimeoutMillis: 10000,
+  };
+}
+
 let sqlite;
 let pool;
 
@@ -20,13 +39,7 @@ if (usePostgres) {
   if (!process.env.SUPABASE_DB_URL) throw new Error("SUPABASE_DB_URL is required when running on Vercel.");
   const { Pool, types } = require("pg");
   types.setTypeParser(20, (value) => Number(value));
-  pool = new Pool({
-    connectionString: process.env.SUPABASE_DB_URL,
-    ssl: process.env.SUPABASE_DB_URL.includes("localhost") ? false : { rejectUnauthorized: true },
-    max: Number(process.env.PG_POOL_MAX || 5),
-    idleTimeoutMillis: 10000,
-    connectionTimeoutMillis: 10000,
-  });
+  pool = new Pool(createPostgresPoolOptions(process.env.SUPABASE_DB_URL, process.env.SUPABASE_DB_CA_CERT));
 } else {
   const Database = require("better-sqlite3");
   const databasePath = path.resolve(process.env.DATABASE_FILE || "data/nlqi.sqlite");
@@ -170,6 +183,7 @@ module.exports = {
   run: (sql, ...params) => execute(sql, params, "run"),
   transaction,
   normalizePostgresSql,
+  createPostgresPoolOptions,
   async health() {
     await execute("SELECT 1", [], "get");
     return true;
