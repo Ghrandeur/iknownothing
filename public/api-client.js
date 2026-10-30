@@ -25,7 +25,7 @@
     return csrfToken;
   }
 
-  async function request(url, options = {}) {
+  async function request(url, options = {}, retry = true) {
     const method = (options.method || "GET").toUpperCase();
     const headers = new Headers(options.headers || {});
     if (!["GET", "HEAD"].includes(method)) {
@@ -37,9 +37,16 @@
       headers.set("Content-Type", "application/json");
       body = JSON.stringify(body);
     }
-    const response = await fetch(url, { ...options, method, headers, body, credentials: "same-origin" });
-    if (response.status === 403 && method !== "GET" && !url.endsWith("/api/auth/login")) {
+    let response;
+    try {
+      response = await fetch(url, { ...options, method, headers, body, credentials: "same-origin" });
+    } catch (_error) {
+      throw new Error("Unable to reach the NLQI server. Check your connection and try again.");
+    }
+    if (response.status === 403 && method !== "GET" && retry) {
       csrfToken = "";
+      await refreshCsrf();
+      return request(url, options, false);
     }
     const result = await responseJson(response);
     if (!response.ok) throw new Error(requestError(response, result));

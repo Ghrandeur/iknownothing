@@ -284,6 +284,11 @@ app.use("/api", async (_req, _res, next) => {
     await ensureInitialAdmin();
     next();
   } catch (error) {
+    if (_req.path === "/auth/register" || _req.path === "/auth/login" || _req.path === "/auth/resend-verification") {
+      console.error("NLQI administrator provisioning failed:", error.message);
+      next();
+      return;
+    }
     next(error);
   }
 });
@@ -324,15 +329,23 @@ app.post("/api/auth/register", authLimit, async (req, res, next) => {
       await audit(userId, "applicant.registered", "user", userId);
       return userId;
     });
+    let emailVerification = emailConfigured() ? "sent" : "development-console";
     try {
       await sendNotificationEmail(email, "Verify your NLQI account", `Hello ${name},\n\nVerify your email to continue your NLQI application:\n${emailLink("/verify", token)}\n\nIf you did not create this account, you can ignore this message.`);
     } catch (error) {
-      await db.run("DELETE FROM users WHERE id = ?", userId);
-      throw error;
+      emailVerification = "failed";
+      console.error("NLQI account created, but verification email delivery failed:", error.message);
+    }
+    if (emailVerification === "failed") {
+      res.status(201).json({
+        message: "Account created, but the verification email could not be sent. Use the resend verification option or contact NLQI.",
+        emailVerification,
+      });
+      return;
     }
     res.status(201).json({
       message: emailConfigured() ? "Account created. Check your email to verify your address." : "Account created. In development, open the verification link printed in the server console.",
-      emailVerification: emailConfigured() ? "sent" : "development-console",
+      emailVerification,
     });
   } catch (error) {
     next(error);

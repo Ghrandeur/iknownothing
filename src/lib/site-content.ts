@@ -1,6 +1,5 @@
 export const siteImages = {
-  queen:
-    "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=1400&q=85",
+  queen: "/images/nlqi-queen-2027.jpg",
   portrait:
     "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1000&q=85",
   leadership:
