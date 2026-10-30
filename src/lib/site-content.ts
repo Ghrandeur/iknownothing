@@ -1,11 +1,11 @@
 export const siteImages = {
   queen: "/images/nlqi-queen-2027.jpg",
-  portrait: "/images/nlqi-hero.jpg",
-  leadership: "/images/nlqi-hero.jpg",
-  mentorship: "/images/women-development.jpg",
-  community: "/images/women-development.jpg",
-  education: "/images/nlqi-queen-2027.jpg",
-  conversation: "/images/nlqi-hero.jpg",
+  portrait: "/images/programme-mental-renaissance.jpg",
+  leadership: "/images/programme-leadership.jpg",
+  mentorship: "/images/programme-community.jpg",
+  community: "/images/programme-youth.jpg",
+  education: "/images/programme-mental-renaissance.jpg",
+  conversation: "/images/programme-leadership.jpg",
 };
 
 export const blogPosts = [
