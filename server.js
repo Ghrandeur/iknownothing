@@ -292,8 +292,12 @@ app.use("/api", async (_req, _res, next) => {
   }
 });
 app.get("/api/health", async (_req, res) => {
-  await db.health();
-  res.json({ ok: true, service: "nlqi-api", database: db.provider });
+  try {
+    await db.health();
+    res.json({ ok: true, service: "nlqi-api", database: db.provider });
+  } catch (error) {
+    res.status(503).json({ ok: false, service: "nlqi-api", database: db.provider, error: "Database connection unavailable" });
+  }
 });
 app.get("/api/csrf", (_req, res) => res.json({ token: issueCsrf(res) }));
 
