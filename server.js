@@ -278,6 +278,7 @@ app.use("/api", (req, res, next) => {
   next();
 }, requestLimit, csrfProtection);
 app.use("/api", async (_req, _res, next) => {
+  if (_req.path === "/health" || _req.path === "/csrf") return next();
   try {
     await ensureInitialAdmin();
     next();
