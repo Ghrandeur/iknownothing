@@ -149,8 +149,18 @@ function csrfProtection(req, res, next) {
     return res.status(403).json({ error: "Your security token expired. Refresh and try again." });
   }
   const origin = req.get("origin");
-  if (origin && origin !== appUrl) {
-    return res.status(403).json({ error: "Request origin is not allowed." });
+  if (origin) {
+    try {
+      const originUrl = new URL(origin);
+      const requestHost = (req.get("x-forwarded-host") || req.get("host") || "").split(",")[0].trim().toLowerCase().replace(/:\d+$/, "");
+      const originHost = originUrl.hostname.toLowerCase();
+      const configuredHost = new URL(appUrl).hostname.toLowerCase();
+      if (![requestHost, configuredHost].includes(originHost)) {
+        return res.status(403).json({ error: "Request origin is not allowed." });
+      }
+    } catch (_error) {
+      return res.status(403).json({ error: "Request origin is invalid." });
+    }
   }
   next();
 }
@@ -348,7 +358,9 @@ app.post("/api/auth/register", authLimit, async (req, res, next) => {
       emailVerification,
     });
   } catch (error) {
-    next(error);
+    if (Number(error.status) >= 400 && Number(error.status) < 500) return next(error);
+    console.error("NLQI registration failed:", error);
+    next(apiError(503, "Registration is temporarily unavailable because the account service could not be reached. Please try again shortly."));
   }
 });
 
