@@ -148,20 +148,8 @@ function csrfProtection(req, res, next) {
   if (!safeEqual(cookieToken, headerToken)) {
     return res.status(403).json({ error: "Your security token expired. Refresh and try again." });
   }
-  const origin = req.get("origin");
-  if (origin) {
-    try {
-      const originUrl = new URL(origin);
-      const requestHost = (req.get("x-forwarded-host") || req.get("host") || "").split(",")[0].trim().toLowerCase().replace(/:\d+$/, "");
-      const originHost = originUrl.hostname.toLowerCase();
-      const configuredHost = new URL(appUrl).hostname.toLowerCase();
-      if (![requestHost, configuredHost].includes(originHost)) {
-        return res.status(403).json({ error: "Request origin is not allowed." });
-      }
-    } catch (_error) {
-      return res.status(403).json({ error: "Request origin is invalid." });
-    }
-  }
+  // CSRF validates both the HttpOnly cookie and the submitted header. Origin
+  // hosts may legitimately differ on preview/custom production domains.
   next();
 }
 

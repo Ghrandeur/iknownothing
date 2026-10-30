@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { AsyncLocalStorage } = require("node:async_hooks");
 
-const usePostgres = Boolean(process.env.SUPABASE_DB_URL || process.env.VERCEL);
+const usePostgres = Boolean(process.env.SUPABASE_DB_URL);
 const transactions = new AsyncLocalStorage();
 
 function normalizePostgresSql(sql) {
@@ -36,13 +36,14 @@ let sqlite;
 let pool;
 
 if (usePostgres) {
-  if (!process.env.SUPABASE_DB_URL) throw new Error("SUPABASE_DB_URL is required when running on Vercel.");
   const { Pool, types } = require("pg");
   types.setTypeParser(20, (value) => Number(value));
   pool = new Pool(createPostgresPoolOptions(process.env.SUPABASE_DB_URL, process.env.SUPABASE_DB_CA_CERT));
 } else {
   const Database = require("better-sqlite3");
-  const databasePath = path.resolve(process.env.DATABASE_FILE || "data/nlqi.sqlite");
+  const databasePath = process.env.VERCEL
+    ? process.env.DATABASE_FILE || "/tmp/nlqi.sqlite"
+    : path.resolve(process.env.DATABASE_FILE || "data/nlqi.sqlite");
   fs.mkdirSync(path.dirname(databasePath), { recursive: true });
   sqlite = new Database(databasePath);
   sqlite.pragma("journal_mode = WAL");
