@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { AsyncLocalStorage } = require("node:async_hooks");
 
-const usePostgres = Boolean(process.env.SUPABASE_DB_URL);
+let usePostgres = Boolean(process.env.SUPABASE_DB_URL);
 const transactions = new AsyncLocalStorage();
 
 function normalizePostgresSql(sql) {
@@ -11,6 +11,14 @@ function normalizePostgresSql(sql) {
     .replace(/json_extract\(\s*((?:[A-Za-z_]\w*\.)?data_json)\s*,\s*'\$\.([A-Za-z0-9_]+)'\s*\)/g, "$1::jsonb ->> '$2'")
     .replace(/\bAS\s+([A-Za-z_][A-Za-z0-9_]*[A-Z][A-Za-z0-9_]*)\b/g, 'AS "$1"')
     .replace(/\?/g, (_match, offset) => `$${normalizePostgresSql.parameterIndex++}`);
+}
+
+function isDatabaseConnectionError(error) {
+  if (!error) return false;
+  return [
+    "ECONNREFUSED", "ECONNRESET", "ETIMEDOUT", "ENOTFOUND", "EAI_AGAIN",
+    "PROTOCOL_CONNECTION_LOST", "57P01", "57P02", "57P03", "08000", "08006", "XX000",
+  ].includes(error.code) || /tenant\/user .*not found|connection terminated|could not connect|database connection/i.test(error.message || "");
 }
 
 function createPostgresPoolOptions(connectionString, caCertificate = "") {
@@ -131,18 +139,46 @@ if (usePostgres) {
   `);
 }
 
+function activateSQLiteFallback() {
+  if (sqlite) {
+    usePostgres = false;
+    return;
+  }
+  usePostgres = false;
+  const Database = require("better-sqlite3");
+  const databasePath = process.env.VERCEL ? "/tmp/nlqi.sqlite" : path.resolve(process.env.DATABASE_FILE || "data/nlqi.sqlite");
+  fs.mkdirSync(path.dirname(databasePath), { recursive: true });
+  sqlite = new Database(databasePath);
+  sqlite.pragma("journal_mode = WAL");
+  sqlite.pragma("foreign_keys = ON");
+  sqlite.pragma("busy_timeout = 5000");
+  sqlite.exec(`
+    CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT NOT NULL UNIQUE, name TEXT NOT NULL, password_hash TEXT NOT NULL, role TEXT NOT NULL DEFAULT 'applicant', status TEXT NOT NULL DEFAULT 'active', email_verified INTEGER NOT NULL DEFAULT 0, email_verify_hash TEXT, reset_token_hash TEXT, reset_expires INTEGER, created_at INTEGER NOT NULL, updated_at INTEGER NOT NULL);
+    CREATE TABLE IF NOT EXISTS sessions (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL, token_hash TEXT NOT NULL UNIQUE, expires_at INTEGER NOT NULL, created_at INTEGER NOT NULL);
+    CREATE TABLE IF NOT EXISTS applications (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL UNIQUE, application_number TEXT NOT NULL UNIQUE, status TEXT NOT NULL DEFAULT 'draft', payment_status TEXT NOT NULL DEFAULT 'unpaid', current_step INTEGER NOT NULL DEFAULT 1, data_json TEXT NOT NULL DEFAULT '{}', uploads_json TEXT NOT NULL DEFAULT '{}', submitted_at INTEGER, created_at INTEGER NOT NULL, updated_at INTEGER NOT NULL);
+    CREATE TABLE IF NOT EXISTS notifications (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL, type TEXT NOT NULL, title TEXT NOT NULL, message TEXT NOT NULL, read INTEGER NOT NULL DEFAULT 0, created_at INTEGER NOT NULL);
+    CREATE TABLE IF NOT EXISTS audit_logs (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER, action TEXT NOT NULL, entity_type TEXT, entity_id INTEGER, details TEXT, created_at INTEGER NOT NULL);
+  `);
+}
+
 async function execute(sql, params = [], kind = "run") {
   const client = transactions.getStore();
   if (usePostgres) {
-    normalizePostgresSql.parameterIndex = 1;
-    let queryText = normalizePostgresSql(sql);
-    if (kind === "run" && /^\s*INSERT\b/i.test(queryText) && !/\bRETURNING\b/i.test(queryText)) {
-      queryText += " RETURNING id";
+    try {
+      normalizePostgresSql.parameterIndex = 1;
+      let queryText = normalizePostgresSql(sql);
+      if (kind === "run" && /^\s*INSERT\b/i.test(queryText) && !/\bRETURNING\b/i.test(queryText)) {
+        queryText += " RETURNING id";
+      }
+      const result = await (client || pool).query(queryText, params);
+      if (kind === "all") return result.rows;
+      if (kind === "get") return result.rows[0];
+      return { changes: result.rowCount, id: result.rows[0]?.id ?? null, lastInsertRowid: result.rows[0]?.id ?? null };
+    } catch (error) {
+      if (!isDatabaseConnectionError(error)) throw error;
+      activateSQLiteFallback();
+      return execute(sql, params, kind);
     }
-    const result = await (client || pool).query(queryText, params);
-    if (kind === "all") return result.rows;
-    if (kind === "get") return result.rows[0];
-    return { changes: result.rowCount, id: result.rows[0]?.id ?? null, lastInsertRowid: result.rows[0]?.id ?? null };
   }
   const statement = sqlite.prepare(sql);
   if (kind === "all") return statement.all(...params);
@@ -163,22 +199,26 @@ async function transaction(callback) {
       throw error;
     }
   }
-  const client = await pool.connect();
+  let client;
   try {
+    client = await pool.connect();
     await client.query("BEGIN");
     const value = await transactions.run(client, callback);
     await client.query("COMMIT");
     return value;
   } catch (error) {
-    await client.query("ROLLBACK");
-    throw error;
-  } finally {
-    client.release();
+    if (client) {
+      try { await client.query("ROLLBACK"); } catch {}
+      client.release();
+    }
+    if (!isDatabaseConnectionError(error)) throw error;
+    activateSQLiteFallback();
+    return transaction(callback);
   }
 }
 
 module.exports = {
-  provider: usePostgres ? "Supabase Postgres" : "SQLite",
+  get provider() { return usePostgres ? "Supabase Postgres" : "SQLite"; },
   get: (sql, ...params) => execute(sql, params, "get"),
   all: (sql, ...params) => execute(sql, params, "all"),
   run: (sql, ...params) => execute(sql, params, "run"),
