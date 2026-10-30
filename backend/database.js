@@ -23,7 +23,7 @@ function createPostgresPoolOptions(connectionString, caCertificate = "") {
   return {
     connectionString: parsedConnectionString.toString(),
     ssl: connectionString.includes("localhost") ? false : {
-      rejectUnauthorized: true,
+      rejectUnauthorized: Boolean(ca),
       ...(ca ? { ca } : {}),
     },
     max: Number(process.env.PG_POOL_MAX || 5),
