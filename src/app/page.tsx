@@ -6,6 +6,7 @@ import {
   StatsSection,
   AdvocacySection,
   JourneySection,
+  RegistrationSection,
   SponsorsSection,
   ApplyCTA,
 } from "@/components/home-sections";
@@ -20,6 +21,7 @@ export default function HomePage() {
       <StatsSection />
       <AdvocacySection />
       <JourneySection />
+      <RegistrationSection />
       <SponsorsSection />
       <ApplyCTA />
     </>

@@ -24,7 +24,8 @@ export function Navbar({
   const links = [
     { href: "/", label: "Home" },
     { href: "/#about", label: "About" },
-    { href: "/#impact", label: "Impact" },
+    { href: "/#impact", label: "2027 Edition" },
+    { href: "/#registration", label: "Registration" },
     { href: "/gallery", label: "Gallery" },
     { href: "/blog", label: "Blog" },
     { href: "/contact", label: "Contact" },

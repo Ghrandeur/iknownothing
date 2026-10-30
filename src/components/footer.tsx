@@ -17,8 +17,8 @@ export function Footer() {
               </div>
             </div>
             <p className="text-white/90 max-w-md leading-relaxed mb-6">
-              Mental Renaissance. More than a crown. It is a platform for purpose. We empower
-              Nigerian women to lead with intellect, advocacy and lasting impact.
+              Mental Renaissance. More than a crown—it is a legacy. We empower Nigerian women
+              to lead with intellect, purpose, advocacy and lasting impact.
             </p>
             <Link href="/apply" className="inline-flex items-center gap-2 text-sm font-semibold text-nlqi-gold hover:text-nlqi-gold-light">
               Become part of the story <ArrowUpRight className="w-4 h-4" />
@@ -42,8 +42,10 @@ export function Footer() {
             <ul className="space-y-4 text-white/90 text-sm">
               <li className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-white" />
-                <a href="mailto:info@nlqi.ng" className="hover:text-nlqi-gold-light">info@nlqi.ng</a>
+                <a href="mailto:nlq.international@gmail.com" className="hover:text-nlqi-gold-light">nlq.international@gmail.com</a>
               </li>
+              <li className="text-white/80"><span className="text-white">Facebook:</span> Nigeria Legacy Queen Int&apos;l</li>
+              <li className="text-white/80"><span className="text-white">Instagram:</span> @nlq_intl</li>
             </ul>
           </div>
         </div>

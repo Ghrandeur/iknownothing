@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { sendContactAction } from "@/lib/actions";
-import { Mail, MapPin, Loader2 } from "lucide-react";
+import { Mail, Loader2, Instagram, Facebook } from "lucide-react";
 
 export default function ContactPage() {
   const [loading, setLoading] = useState(false);
@@ -53,16 +53,25 @@ export default function ContactPage() {
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-nlqi-green">Email</h3>
-                <p className="text-nlqi-charcoal/70">info@nlqi.ng</p>
+                <a href="mailto:nlq.international@gmail.com" className="text-nlqi-charcoal/70 hover:text-nlqi-green">nlq.international@gmail.com</a>
               </div>
             </div>
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 rounded-full gold-gradient flex items-center justify-center text-nlqi-green">
-                <MapPin className="w-5 h-5" />
+                <Instagram className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-nlqi-green">Location</h3>
-                <p className="text-nlqi-charcoal/70">Lagos, Nigeria</p>
+                <h3 className="text-lg font-semibold text-nlqi-green">Instagram</h3>
+                <p className="text-nlqi-charcoal/70">@nlq_intl</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-full gold-gradient flex items-center justify-center text-nlqi-green">
+                <Facebook className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-nlqi-green">Facebook</h3>
+                <p className="text-nlqi-charcoal/70">Nigeria Legacy Queen Int&apos;l</p>
               </div>
             </div>
           </div>

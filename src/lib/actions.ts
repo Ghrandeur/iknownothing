@@ -42,6 +42,10 @@ import { logAction } from "@/lib/audit";
 
 const PUBLIC_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 const APPLICATION_FEE = Number(process.env.APPLICATION_FEE || 5000);
+function getRegistrationFee(now = new Date()) {
+  const lateWindow = now.getFullYear() === 2027 && now.getMonth() === 1 && now.getDate() >= 1 && now.getDate() <= 27;
+  return lateWindow ? 7000 : APPLICATION_FEE;
+}
 
 export type ActionResult<T = unknown> =
   | { success: true; data?: T; message?: string }
@@ -426,17 +430,18 @@ export async function initializeApplicationPaymentAction(): Promise<ActionResult
   }
 
   const reference = `NLQI-PAY-${application.id}-${Date.now()}`;
+  const registrationFee = getRegistrationFee();
   await db.insert(payments).values({
     applicationId: application.id,
     userId: user.id,
     reference,
-    amount: APPLICATION_FEE,
+    amount: registrationFee,
     status: "unpaid",
   });
 
   const init = await initializePaystackPayment({
     email: application.email || user.email,
-    amount: APPLICATION_FEE,
+    amount: registrationFee,
     reference,
     callbackUrl: `${PUBLIC_URL}/apply`,
   });

@@ -16,7 +16,12 @@ const publicRoot = path.join(__dirname, "public");
 const uploadRoot = path.resolve(process.env.UPLOAD_DIR || "uploads");
 const isProduction = process.env.NODE_ENV === "production";
 const sessionTtlDays = Number(process.env.SESSION_TTL_DAYS || 7);
-const feeNaira = Number(process.env.APPLICATION_FEE || 5000);
+const configuredFee = Number(process.env.APPLICATION_FEE || 5000);
+const registrationFee = (now = new Date()) => {
+  const inLateWindow = now.getFullYear() === 2027 && now.getMonth() === 1 && now.getDate() >= 1 && now.getDate() <= 27;
+  return inLateWindow ? 7000 : configuredFee;
+};
+const feeNaira = configuredFee;
 const appUrlValue = process.env.APP_URL ||
   (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : `http://localhost:${port}`);
 let appUrl;
@@ -469,6 +474,7 @@ const applications = require("./backend/applications")({
   sendNotificationEmail,
   uploadRoot,
   feeNaira,
+  registrationFee,
   appUrl,
 });
 require("./backend/admin")({

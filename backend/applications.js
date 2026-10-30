@@ -44,6 +44,7 @@ module.exports = function configureApplicationRoutes({
   sendNotificationEmail,
   uploadRoot,
   feeNaira,
+  registrationFee,
   appUrl,
 }) {
   const uploader = multer({
@@ -414,12 +415,13 @@ module.exports = function configureApplicationRoutes({
     try {
       const secret = process.env.PAYSTACK_SECRET_KEY;
       if (!secret) throw apiError(503, "Online payment is not configured yet. Please contact NLQI.");
-      if (!Number.isSafeInteger(feeNaira) || feeNaira < 1) throw apiError(503, "The application fee is not configured correctly.");
+      const feeForRegistration = typeof registrationFee === "function" ? registrationFee() : feeNaira;
+      if (!Number.isSafeInteger(feeForRegistration) || feeForRegistration < 1) throw apiError(503, "The application fee is not configured correctly.");
       const application = await loadApplication(req.user.id);
       if (application.status === "draft") throw apiError(409, "Submit your application before making payment.");
       if (application.payment_status === "paid") throw apiError(409, "This application fee has already been paid.");
       const reference = `NLQI-${application.application_number}-${crypto.randomBytes(6).toString("hex")}`;
-      const amount = feeNaira * 100;
+      const amount = feeForRegistration * 100;
       const currency = (process.env.PAYSTACK_CURRENCY || "NGN").toUpperCase();
       await db.run(`
         INSERT INTO payments (application_id, user_id, reference, amount, currency, status, created_at)

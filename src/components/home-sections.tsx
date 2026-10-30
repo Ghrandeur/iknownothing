@@ -51,30 +51,36 @@ export function HeroSection() {
           <motion.div variants={fadeUp} className="mb-7 flex items-center gap-3">
             <span className="h-px w-10 bg-nlqi-gold" />
             <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-nlqi-gold-light">
-              Nigeria Legacy Queen International
+              Official contestant registration • 2027
             </p>
           </motion.div>
           <motion.h1
             variants={fadeUp}
             className="max-w-2xl text-[3.5rem] font-medium leading-[0.98] tracking-[-0.055em] sm:text-7xl lg:text-[5.5rem]"
           >
-            A new kind
+            Roots of
             <br />
-            of <span className="font-normal italic text-nlqi-gold-light">queen.</span>
+            <span className="font-normal italic text-nlqi-gold-light">Greatness.</span>
           </motion.h1>
           <motion.p
             variants={fadeUp}
-            className="mt-7 max-w-lg text-base leading-7 text-white/75 sm:text-lg sm:leading-8"
+            className="mt-4 text-xs font-bold uppercase tracking-[0.26em] text-nlqi-gold-light"
           >
-            A generation of women defined by intellect, leadership, purpose and
-            lasting impact. More than a crown—it&apos;s a platform for purpose.
+            Mental Renaissance
+          </motion.p>
+          <motion.p
+            variants={fadeUp}
+            className="mt-5 max-w-lg text-base leading-7 text-white/75 sm:text-lg sm:leading-8"
+          >
+            Welcome to NLQI 2027—a prestigious beauty, leadership and empowerment
+            platform raising confident, intelligent and purpose-driven young women.
           </motion.p>
           <motion.div variants={fadeUp} className="mt-9 flex flex-wrap gap-3">
             <Link
               href="/apply"
               className="group inline-flex items-center gap-3 rounded-full bg-nlqi-gold px-6 py-4 text-[11px] font-bold uppercase tracking-[0.13em] text-nlqi-green transition hover:bg-nlqi-gold-light"
             >
-              Begin your journey
+              Register now
               <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
             <Link
@@ -225,17 +231,17 @@ export function AboutSection() {
             variants={fadeUp}
             className="mt-5 max-w-xl text-4xl font-medium leading-[1.08] tracking-[-0.04em] text-nlqi-green sm:text-6xl"
           >
-            Beauty is a beginning.
-            <span className="font-normal italic text-[#a58225]"> Purpose is the legacy.</span>
+            Nigeria Legacy
+            <span className="font-normal italic text-[#a58225]"> Queen Int’l.</span>
           </motion.h2>
           <motion.p
             variants={fadeUp}
             className="mt-7 max-w-xl text-base leading-8 text-nlqi-charcoal/70"
           >
-            Nigeria Legacy Queen International is a non-profit pageant foundation
-            empowering Nigerian women through leadership, intellect, advocacy and
-            legacy. We believe beauty becomes powerful when purpose gives it
-            direction.
+            A leadership-focused pageantry platform designed to redefine the modern
+            queen beyond beauty. NLQI empowers young women through intellectual
+            development, leadership, purpose, cultural awareness, advocacy and
+            personal growth.
           </motion.p>
           <motion.blockquote
             variants={fadeUp}
@@ -369,10 +375,10 @@ export function ValuesSection() {
 
 export function StatsSection() {
   const stats = [
-    { value: "1,000+", label: "Future leaders" },
-    { value: "36", label: "States represented" },
-    { value: "200+", label: "Community projects" },
-    { value: "100%", label: "Purpose driven" },
+    { value: "2027", label: "Edition year" },
+    { value: "12 JUN", label: "Grand finale" },
+    { value: "₦5K", label: "Early fee" },
+    { value: "1 QUEEN", label: "One lasting legacy" },
   ];
 
   return (
@@ -402,9 +408,6 @@ export function StatsSection() {
             ))}
           </div>
         </div>
-        <p className="mt-8 text-[10px] leading-5 text-nlqi-charcoal/45">
-          Aspirational programme targets. Replace with verified programme reporting before publication.
-        </p>
       </div>
     </section>
   );
@@ -465,6 +468,70 @@ export function AdvocacySection() {
               </span>
             </motion.article>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function RegistrationSection() {
+  const eligibility = [
+    "Female candidates aged 18–26",
+    "Body size UK 8–10",
+    "Minimum height 5′7″",
+    "Confidence, intelligence, good character and leadership potential",
+    "Willingness to comply with the pageant rules and regulations",
+  ];
+
+  return (
+    <section id="registration" className="scroll-mt-24 bg-nlqi-cream py-20 sm:py-28">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
+        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="rounded-3xl bg-nlqi-green p-8 text-white sm:p-10">
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-nlqi-gold-light">Registration details</p>
+            <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-5xl">Choose your registration window.</h2>
+            <div className="mt-10 space-y-px overflow-hidden rounded-2xl border border-white/15">
+              <div className="grid grid-cols-[1fr_auto] gap-6 bg-white/[0.07] p-6">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[0.14em] text-nlqi-gold-light">Early registration</p>
+                  <p className="mt-2 text-sm text-white/70">November 1, 2026 – January 31, 2027</p>
+                </div>
+                <p className="font-serif text-3xl">₦5,000</p>
+              </div>
+              <div className="grid grid-cols-[1fr_auto] gap-6 p-6">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[0.14em] text-nlqi-gold-light">Late registration</p>
+                  <p className="mt-2 text-sm text-white/70">February 1 – 27, 2027</p>
+                </div>
+                <p className="font-serif text-3xl">₦7,000</p>
+              </div>
+            </div>
+            <div className="mt-7 flex items-center justify-between border-t border-white/15 pt-6">
+              <p className="text-xs uppercase tracking-[0.14em] text-white/60">Grand finale</p>
+              <p className="font-serif text-xl text-nlqi-gold-light">June 12, 2027</p>
+            </div>
+            <p className="mt-6 text-xs leading-5 text-white/55">All registration fees are non-refundable.</p>
+          </div>
+
+          <div className="rounded-3xl border border-nlqi-green/10 bg-white p-8 sm:p-10">
+            <p className="editorial-label">Eligibility requirements</p>
+            <h2 className="mt-4 text-4xl font-medium tracking-[-0.04em] text-nlqi-green">Are you ready to rise?</h2>
+            <ul className="mt-8 divide-y divide-nlqi-green/10">
+              {eligibility.map((item, index) => (
+                <li key={item} className="flex gap-4 py-4 text-sm leading-6 text-nlqi-charcoal/75">
+                  <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-nlqi-gold/20 font-serif text-xs text-nlqi-green">{index + 1}</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <div className="mt-8 rounded-2xl bg-[#fbf8ef] p-5 text-sm leading-6 text-nlqi-charcoal/70">
+              <strong className="block text-nlqi-green">Important notice</strong>
+              Provide accurate information, complete every required section, and submit valid evidence of payment. Registration does not guarantee automatic selection; shortlisted applicants will be contacted through their registered details.
+            </div>
+            <Link href="/apply" className="mt-8 inline-flex items-center gap-3 rounded-full bg-nlqi-green px-6 py-4 text-[10px] font-bold uppercase tracking-[0.14em] text-white transition hover:bg-nlqi-green-dark">
+              Begin registration <ArrowUpRight className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
       </div>
     </section>
@@ -568,15 +635,15 @@ export function ApplyCTA() {
             purpose your <span className="italic text-nlqi-gold-light">platform?</span>
           </h2>
           <p className="mt-5 max-w-xl text-sm leading-7 text-white/70">
-            Bring your ideas, your ambition and your story. Your legacy can start
-            with one small step.
+            Your journey to greatness begins here. More than a crown—it&apos;s a legacy.
+            Take the bold step towards becoming Nigeria Legacy Queen International 2027.
           </p>
         </div>
         <Link
           href="/apply"
           className="group inline-flex shrink-0 items-center gap-4 self-start rounded-full bg-nlqi-gold px-7 py-4 text-[10px] font-bold uppercase tracking-[0.14em] text-nlqi-green transition hover:bg-nlqi-gold-light md:self-auto"
         >
-          Start your application
+Register for NLQI 2027
           <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
         </Link>
       </div>

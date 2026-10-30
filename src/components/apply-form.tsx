@@ -118,6 +118,9 @@ function FileDrop({
 
 export function ApplyForm({ application }: { application: Record<string, unknown> }) {
   const app = application as ApplicationData;
+  const now = new Date();
+  const isLateWindow = now.getFullYear() === 2027 && now.getMonth() === 1 && now.getDate() >= 1 && now.getDate() <= 27;
+  const registrationFee = isLateWindow ? 7000 : Number(process.env.NEXT_PUBLIC_APPLICATION_FEE || 5000);
   const [step, setStep] = useState(Math.max(1, Number(app.currentStep) || 1));
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
@@ -368,7 +371,7 @@ export function ApplyForm({ application }: { application: Record<string, unknown
                     className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-nlqi-gold text-nlqi-green font-bold rounded-full hover:bg-nlqi-gold-light transition-colors disabled:opacity-60"
                   >
                     {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <CreditCard className="w-4 h-4" />}
-                    Pay Application Fee (₦{process.env.NEXT_PUBLIC_APPLICATION_FEE || 5000})
+                    Pay Application Fee (₦{registrationFee.toLocaleString("en-NG")})
                   </button>
                 )}
               </div>

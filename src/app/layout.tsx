@@ -6,9 +6,9 @@ import { Footer } from "@/components/footer";
 import { getCurrentUser } from "@/lib/auth";
 
 export const metadata: Metadata = {
-  title: "Nigeria Legacy Queen International | Mental Renaissance",
+  title: "NLQI 2027 | Roots of Greatness — Mental Renaissance",
   description:
-    "NLQI is a non-profit pageant foundation empowering Nigerian women through leadership, intellect, advocacy and legacy. More than a crown. It's a platform for purpose.",
+    "Official contestant registration for Nigeria Legacy Queen International 2027. A leadership and empowerment platform built on Roots of Greatness and Mental Renaissance.",
 };
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
