@@ -296,7 +296,7 @@ app.get("/api/health", async (_req, res) => {
     await db.health();
     res.json({ ok: true, service: "nlqi-api", database: db.provider });
   } catch (error) {
-    res.status(503).json({ ok: false, service: "nlqi-api", database: db.provider, error: "Database connection unavailable", detail: error.code || error.message });
+    res.status(503).json({ ok: false, service: "nlqi-api", database: db.provider, error: "Database connection unavailable",     detail: `${error.code || "DB_ERROR"}: ${error.message || "Unknown database error"}` });
   }
 });
 app.get("/api/csrf", (_req, res) => res.json({ token: issueCsrf(res) }));
