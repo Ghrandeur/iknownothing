@@ -56,7 +56,7 @@ export default function GalleryPage() {
           ))}
         </div>
         <p className="mt-8 text-center text-[10px] leading-5 text-nlqi-charcoal/45">
-          Illustrative photography. Replace with NLQI programme images as they become available.
+          Photography selected to reflect African leadership, community and excellence.
         </p>
       </div>
     </div>

@@ -1,17 +1,11 @@
 export const siteImages = {
   queen: "/images/nlqi-queen-2027.jpg",
-  portrait:
-    "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1000&q=85",
-  leadership:
-    "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1000&q=85",
-  mentorship:
-    "https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=1000&q=85",
-  community:
-    "https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=1000&q=85",
-  education:
-    "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1000&q=85",
-  conversation:
-    "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1000&q=85",
+  portrait: "/images/nlqi-hero.jpg",
+  leadership: "/images/nlqi-hero.jpg",
+  mentorship: "/images/women-development.jpg",
+  community: "/images/women-development.jpg",
+  education: "/images/nlqi-queen-2027.jpg",
+  conversation: "/images/nlqi-hero.jpg",
 };
 
 export const blogPosts = [
