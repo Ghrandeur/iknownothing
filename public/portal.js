@@ -79,7 +79,9 @@ if (loginForm) {
 
 const verifyMessage = document.querySelector("#verify-message");
 if (verifyMessage) {
-  const token = new URLSearchParams(window.location.search).get("token");
+  const query = new URLSearchParams(window.location.search);
+  const hashQuery = new URLSearchParams(window.location.hash.replace(/^#/, "").replace(/^\?/, ""));
+  const token = query.get("token") || hashQuery.get("token") || "";
   if (!token) {
     api.displayMessage(verifyMessage, "This verification link is missing its token.", true);
   } else {

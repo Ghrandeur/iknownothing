@@ -104,7 +104,7 @@ const requestLimit = rateLimit({
   legacyHeaders: false,
 });
 const authLimit = rateLimit({
-  windowMs: 15 * 60 * 1000,
+  windowMs: 3 * 60 * 1000,
   limit: 10,
   standardHeaders: "draft-8",
   legacyHeaders: false,
@@ -195,8 +195,14 @@ function emailLink(pathname, token) {
   return `${appUrl}${pathname}?token=${encodeURIComponent(token)}`;
 }
 
-async function sendNotificationEmail(to, subject, text) {
-  return sendMail({ to, subject, text, from: emailFrom() });
+async function sendNotificationEmail(to, subject, text, html = null) {
+  return sendMail({ to, subject, text, ...(html ? { html } : {}), from: emailFrom() });
+}
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+  })[character]);
 }
 
 function deliveryStatus(result) {
@@ -334,7 +340,8 @@ app.post("/api/auth/register", authLimit, async (req, res, next) => {
     });
     let emailVerification = emailConfigured() ? "sent" : "development-console";
     try {
-      await sendNotificationEmail(email, "Verify your NLQI account", `Hello ${name},\n\nVerify your email to continue your NLQI application:\n${emailLink("/verify", token)}\n\nIf you did not create this account, you can ignore this message.`);
+      const verificationUrl = emailLink("/verify", token);
+      await sendNotificationEmail(email, "Verify your NLQI account", `Hello ${name},\n\nVerify your email to continue your NLQI application:\n${verificationUrl}\n\nIf you did not create this account, you can ignore this message.`, `<p>Hello ${escapeHtml(name)},</p><p>Verify your email to continue your NLQI application.</p><p><a href="${escapeHtml(verificationUrl)}" style="display:inline-block;padding:12px 18px;background:#176b3a;color:#fff;text-decoration:none;border-radius:6px">Verify email address</a></p><p>If the button does not work, copy and open this link:<br><a href="${escapeHtml(verificationUrl)}">${escapeHtml(verificationUrl)}</a></p><p>If you did not create this account, you can ignore this message.</p>`);
     } catch (error) {
       emailVerification = "failed";
       console.error("NLQI account created, but verification email delivery failed:", error.message);
@@ -390,7 +397,8 @@ app.post("/api/auth/resend-verification", authLimit, async (req, res, next) => {
       const token = randomToken();
       await db.run("UPDATE users SET email_verify_hash = ?, updated_at = ? WHERE id = ?",
         hashToken(token), Date.now(), user.id);
-      await sendNotificationEmail(user.email, "Verify your NLQI account", `Hello ${user.name},\n\nUse this link to verify your email:\n${emailLink("/verify", token)}`);
+      const verificationUrl = emailLink("/verify", token);
+      await sendNotificationEmail(user.email, "Verify your NLQI account", `Hello ${user.name},\n\nUse this link to verify your email:\n${verificationUrl}`, `<p>Hello ${escapeHtml(user.name)},</p><p>Use this secure link to verify your email address.</p><p><a href="${escapeHtml(verificationUrl)}" style="display:inline-block;padding:12px 18px;background:#176b3a;color:#fff;text-decoration:none;border-radius:6px">Verify email address</a></p><p>If the button does not work, copy and open this link:<br><a href="${escapeHtml(verificationUrl)}">${escapeHtml(verificationUrl)}</a></p>`);
     }
     res.json({
       message: emailConfigured()
