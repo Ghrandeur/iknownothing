@@ -413,13 +413,27 @@ module.exports = function configureApplicationRoutes({
 
   app.post("/api/payments/initialize", authenticate, requireVerified, async (req, res, next) => {
     try {
-      const secret = process.env.PAYSTACK_SECRET_KEY;
-      if (!secret) throw apiError(503, "Online payment is not configured yet. Please contact NLQI.");
-      const feeForRegistration = typeof registrationFee === "function" ? registrationFee() : feeNaira;
-      if (!Number.isSafeInteger(feeForRegistration) || feeForRegistration < 1) throw apiError(503, "The application fee is not configured correctly.");
       const application = await loadApplication(req.user.id);
       if (application.status === "draft") throw apiError(409, "Submit your application before making payment.");
       if (application.payment_status === "paid") throw apiError(409, "This application fee has already been paid.");
+
+      const externalPaymentUrl = process.env.APPLICATION_PAYMENT_URL || process.env.PAYMENT_URL;
+      if (externalPaymentUrl) {
+        try {
+          const destination = new URL(externalPaymentUrl);
+          if (!["http:", "https:"].includes(destination.protocol)) throw new Error("Invalid protocol");
+          destination.searchParams.set("applicationReference", application.application_number);
+          await audit(req.user.id, "payment.redirected", "payment", null, { applicationNumber: application.application_number });
+          return res.json({ authorizationUrl: destination.toString(), external: true });
+        } catch {
+          throw apiError(503, "The official payment link is not configured correctly. Please contact NLQI.");
+        }
+      }
+
+      const secret = process.env.PAYSTACK_SECRET_KEY;
+      if (!secret) throw apiError(503, "The official payment page is not available yet. Please contact NLQI for payment instructions.");
+      const feeForRegistration = typeof registrationFee === "function" ? registrationFee() : feeNaira;
+      if (!Number.isSafeInteger(feeForRegistration) || feeForRegistration < 1) throw apiError(503, "The application fee is not configured correctly.");
       const reference = `NLQI-${application.application_number}-${crypto.randomBytes(6).toString("hex")}`;
       const amount = feeForRegistration * 100;
       const currency = (process.env.PAYSTACK_CURRENCY || "NGN").toUpperCase();

@@ -138,8 +138,9 @@ async function loadApplicantTrack() {
     document.querySelector("#track-number").textContent = application?.application_number || "Application not created";
     document.querySelector("#track-status").textContent = application?.status || "No application";
     document.querySelector("#track-payment").textContent = application?.payment_status || "unpaid";
-    if (paymentMessage && new URLSearchParams(window.location.search).get("checkout") === "unavailable") {
-      paymentMessage.textContent = "Your application was submitted, but online checkout could not be opened. You can retry payment here, or contact NLQI for assistance.";
+    const portalQuery = new URLSearchParams(window.location.search);
+    if (paymentMessage && portalQuery.get("submitted") === "1") {
+      paymentMessage.textContent = "Your application was submitted successfully. Use the payment button to view the official NLQI payment instructions when they are available.";
       paymentMessage.hidden = false;
     }
     document.querySelector("#notification-list").replaceChildren();
@@ -170,7 +171,7 @@ async function loadApplicantTrack() {
   document.querySelector("#pay-now")?.addEventListener("click", async () => {
     try {
       const result = await api.request("/api/payments/initialize", { method: "POST", body: {} });
-      window.location.href = result.authorizationUrl;
+      window.location.assign(result.authorizationUrl);
     } catch (error) {
       if (paymentMessage) {
         paymentMessage.textContent = error.message;

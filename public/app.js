@@ -306,16 +306,7 @@ if (applicationForm) {
           ? " Your application was submitted, but the notification email could not be delivered."
           : "";
       accountMessage.textContent = `${result.message} Your reference is ${result.application.applicationNumber}.${emailNote}`;
-      try {
-        const checkout = await window.nlqiApi.request("/api/payments/initialize", {
-          method: "POST",
-          body: {},
-        });
-        window.location.assign(checkout.authorizationUrl);
-      } catch (error) {
-        console.error("Application submitted, but payment checkout could not start:", error.message);
-        window.location.assign("/track?checkout=unavailable");
-      }
+      window.location.assign("/track?submitted=1");
     }).catch((error) => showFeedback(error.message, true))
     .finally(() => { submit.disabled = false; });
   });
