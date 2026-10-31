@@ -424,7 +424,7 @@ app.post("/api/auth/login", authLimit, async (req, res, next) => {
     try {
       await ensureInitialAdmin(true);
     } catch (error) {
-      throw apiError(503, `Administrator sign-in is temporarily unavailable: ${error.message}`);
+      throw apiError(409, `Administrator sign-in configuration error: ${error.message}`);
     }
     const email = validEmail(req.body.email) ? req.body.email.trim().toLowerCase() : "";
     const password = typeof req.body.password === "string" ? req.body.password : "";
