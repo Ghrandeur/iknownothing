@@ -185,7 +185,8 @@ export function HeroSection() {
 export function AboutSection() {
   return (
     <section id="about" className="scroll-mt-24 bg-nlqi-cream py-20 sm:py-28">
-      <div className="mx-auto grid max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-2 lg:gap-24 lg:px-10">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
+        <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-24">
         <motion.div
           initial={{ opacity: 0, x: -24 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -257,6 +258,37 @@ export function AboutSection() {
               Our story <ArrowRight className="h-4 w-4" />
             </Link>
           </motion.div>
+        </motion.div>
+        </div>
+
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={stagger}
+          className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-nlqi-green/10 bg-nlqi-green/10 md:grid-cols-2 sm:mt-20"
+        >
+          <motion.article variants={fadeUp} className="bg-white p-8 sm:p-10">
+            <div className="flex items-center gap-3 text-nlqi-gold">
+              <Target className="h-5 w-5" strokeWidth={1.6} />
+              <p className="editorial-label text-nlqi-green">Mission</p>
+            </div>
+            <p className="mt-5 text-base leading-8 text-nlqi-charcoal/70">
+              To provide a transformative platform that develops women through intellectual growth,
+              leadership, cultural awareness, personal development and purposeful advocacy, equipping
+              them to become confident leaders and positive agents of change in society.
+            </p>
+          </motion.article>
+          <motion.article variants={fadeUp} className="bg-white p-8 sm:p-10">
+            <div className="flex items-center gap-3 text-nlqi-gold">
+              <Eye className="h-5 w-5" strokeWidth={1.6} />
+              <p className="editorial-label text-nlqi-green">Vision</p>
+            </div>
+            <p className="mt-5 text-base leading-8 text-nlqi-charcoal/70">
+              To become a leading international platform for empowering women to discover their potential,
+              embrace their identity, develop their minds, lead with purpose, and create lasting legacies.
+            </p>
+          </motion.article>
         </motion.div>
       </div>
     </section>
