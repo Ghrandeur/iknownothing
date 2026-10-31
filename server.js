@@ -235,12 +235,15 @@ async function ensureInitialAdmin(forcePasswordSync = false) {
         if (existing.role !== "admin") {
           throw new Error("ADMIN_EMAIL already belongs to a non-admin account; choose another email.");
         }
-        const passwordHash = await require("bcryptjs").hash(password, 12);
-        await db.run("UPDATE users SET password_hash = ?, email_verified = 1, status = 'active', updated_at = ? WHERE id = ?",
-          passwordHash, Date.now(), existing.id);
+        if (forcePasswordSync) {
+          const bcrypt = require("bcryptjs");
+          const passwordHash = await bcrypt.hash(password, 10);
+          await db.run("UPDATE users SET password_hash = ?, email_verified = 1, status = 'active', updated_at = ? WHERE id = ?",
+            passwordHash, Date.now(), existing.id);
+        }
         return;
       }
-      const passwordHash = await require("bcryptjs").hash(password, 12);
+      const passwordHash = await require("bcryptjs").hash(password, 10);
       const now = Date.now();
       let result;
       try {
@@ -418,7 +421,11 @@ app.post("/api/auth/resend-verification", authLimit, async (req, res, next) => {
 
 app.post("/api/auth/login", authLimit, async (req, res, next) => {
   try {
-    await ensureInitialAdmin(true);
+    try {
+      await ensureInitialAdmin(true);
+    } catch (error) {
+      throw apiError(503, `Administrator sign-in is temporarily unavailable: ${error.message}`);
+    }
     const email = validEmail(req.body.email) ? req.body.email.trim().toLowerCase() : "";
     const password = typeof req.body.password === "string" ? req.body.password : "";
     const user = email ? await db.get("SELECT * FROM users WHERE email = ? AND status = 'active'", email) : null;
