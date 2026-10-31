@@ -128,7 +128,11 @@ after(async () => {
 
 test("static site and health endpoint are served", async () => {
   const health = await fetch(`${origin}/api/health`);
-  assert.deepEqual(await json(health), { ok: true, service: "nlqi-api", database: "SQLite" });
+  const healthBody = await json(health);
+  assert.equal(healthBody.ok, true);
+  assert.equal(healthBody.service, "nlqi-api");
+  assert.equal(healthBody.database, "SQLite");
+  assert.equal(typeof healthBody.adminConfigured, "boolean");
   const homepage = await fetch(origin);
   assert.equal(homepage.status, 200);
   assert.match(await homepage.text(), /Nigeria Legacy Queen International/);
