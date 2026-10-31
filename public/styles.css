@@ -425,7 +425,7 @@ img { display: block; max-width: 100%; }
 .apply-home-link:focus-visible { outline: 2px solid var(--lime); outline-offset: 4px; }
 .apply-home-link:active { transform: translateY(0) scale(.98); }
 .apply-intro { position: relative; overflow: hidden; isolation: isolate; min-height: 455px; margin: 0; color: white; background: var(--night); text-align: left; }
-.apply-intro::before { position: absolute; inset: 0; z-index: -2; background: url("/images/nlqi-hero.jpg") center 34% / cover no-repeat; content: ""; opacity: .68; }
+.apply-intro::before { position: absolute; inset: 0; z-index: -2; background: url("/images/nlqi-queen-2027.jpg") center 34% / cover no-repeat; content: ""; opacity: .68; }
 .apply-intro::after { position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, #10120d 0%, rgb(16 18 13 / 96%) 33%, rgb(16 18 13 / 63%) 65%, rgb(16 18 13 / 23%) 100%), linear-gradient(0deg, rgb(16 18 13 / 63%), transparent 48%); content: ""; }
 .apply-intro-inner { display: flex; width: calc(100% - var(--gutter) - var(--gutter)); max-width: 1284px; min-height: 455px; align-items: center; justify-content: space-between; margin: 0 auto; padding: 58px 0 66px; }
 .apply-intro-copy { width: min(780px, 75%); text-align: left; }
