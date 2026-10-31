@@ -590,6 +590,8 @@ const cleanPageRoutes = {
   admin: "admin.html",
   "admin-login": "admin-login.html",
   manage: "admin-login.html",
+  "admin-login": "admin-login.html",
+  manage: "admin-login.html",
   judge: "judge.html",
   "forgot-password": "forgot-password.html",
   "reset-password": "reset-password.html",

@@ -21,7 +21,7 @@
       "dest": "/"
     },
     {
-      "src": "/(apply|register|login|verify|track|admin|judge|forgot-password|reset-password|contact|privacy|blog|blog-post|gallery)\\.html$",
+      "src": "/(apply|register|login|verify|track|admin|admin-login|manage|judge|forgot-password|reset-password|contact|privacy|blog|blog-post|gallery)\\.html$",
       "status": 308,
       "dest": "/$1"
     },
@@ -52,6 +52,14 @@
     {
       "src": "/admin/?$",
       "dest": "/public/admin.html"
+    },
+    {
+      "src": "/admin-login/?$",
+      "dest": "/public/admin-login.html"
+    },
+    {
+      "src": "/manage/?$",
+      "dest": "/public/admin-login.html"
     },
     {
       "src": "/judge/?$",

@@ -14,7 +14,7 @@ test("Vercel serves the public site and routes API requests to the Node function
   assert.deepEqual(config.routes, [
     { src: "/api/(.*)", dest: "/api/index.js" },
     { src: "/index\\.html$", status: 308, dest: "/" },
-    { src: "/(apply|register|login|verify|track|admin|judge|forgot-password|reset-password|contact|privacy|blog|blog-post|gallery)\\.html$", status: 308, dest: "/$1" },
+    { src: "/(apply|register|login|verify|track|admin|admin-login|manage|judge|forgot-password|reset-password|contact|privacy|blog|blog-post|gallery)\\.html$", status: 308, dest: "/$1" },
     { src: "/", dest: "/public/index.html" },
     { src: "/apply/?$", dest: "/public/apply.html" },
     { src: "/register/?$", dest: "/public/register.html" },
@@ -22,6 +22,8 @@ test("Vercel serves the public site and routes API requests to the Node function
     { src: "/verify/?$", dest: "/public/verify.html" },
     { src: "/track/?$", dest: "/public/track.html" },
     { src: "/admin/?$", dest: "/public/admin.html" },
+    { src: "/admin-login/?$", dest: "/public/admin-login.html" },
+    { src: "/manage/?$", dest: "/public/admin-login.html" },
     { src: "/judge/?$", dest: "/public/judge.html" },
     { src: "/forgot-password/?$", dest: "/public/forgot-password.html" },
     { src: "/reset-password/?$", dest: "/public/reset-password.html" },
@@ -46,4 +48,6 @@ test("Vercel serves the public site and routes API requests to the Node function
   for (const page of ["apply", "register", "login", "verify", "track", "admin", "judge", "forgot-password", "reset-password", "contact", "privacy", "blog", "blog-post", "gallery"]) {
     assert.ok(config.routes.some(({ src, dest }) => src === `/${page}/?$` && dest === `/public/${page}.html`), `missing clean URL route for /${page}`);
   }
+  assert.ok(config.routes.some(({ src, dest }) => src === "/admin-login/?$" && dest === "/public/admin-login.html"));
+  assert.ok(config.routes.some(({ src, dest }) => src === "/manage/?$" && dest === "/public/admin-login.html"));
 });
