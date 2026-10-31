@@ -17,7 +17,10 @@ async function main() {
   const existing = await db.get("SELECT id, role FROM users WHERE email = ?", email);
   if (existing) {
     if (existing.role !== "admin") throw new Error("That email already belongs to a non-admin account; choose another ADMIN_EMAIL.");
-    console.log(`Administrator ${email} already exists; no changes made.`);
+    const passwordHash = await bcrypt.hash(password, 12);
+    await db.run("UPDATE users SET password_hash = ?, email_verified = 1, status = 'active', updated_at = ? WHERE id = ?",
+      passwordHash, Date.now(), existing.id);
+    console.log(`Administrator credentials reset for ${email}.`);
     return;
   }
   const passwordHash = await bcrypt.hash(password, 12);

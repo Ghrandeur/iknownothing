@@ -232,6 +232,9 @@ async function ensureInitialAdmin() {
         if (existing.role !== "admin") {
           throw new Error("ADMIN_EMAIL already belongs to a non-admin account; choose another email.");
         }
+        const passwordHash = await require("bcryptjs").hash(password, 12);
+        await db.run("UPDATE users SET password_hash = ?, email_verified = 1, status = 'active', updated_at = ? WHERE id = ?",
+          passwordHash, Date.now(), existing.id);
         return;
       }
       const passwordHash = await require("bcryptjs").hash(password, 12);
