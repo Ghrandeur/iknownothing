@@ -214,7 +214,7 @@ function publicUser(user) {
 }
 
 let adminProvisionPromise;
-async function ensureInitialAdmin() {
+async function ensureInitialAdmin(forcePasswordSync = false) {
   const configuredEmail = process.env.ADMIN_EMAIL;
   const password = process.env.ADMIN_PASSWORD;
   if (!configuredEmail && !password) return;
@@ -224,6 +224,9 @@ async function ensureInitialAdmin() {
   const email = configuredEmail.trim().toLowerCase();
   if (password.length < 16 || password.length > 128) {
     throw new Error("ADMIN_PASSWORD must contain between 16 and 128 characters.");
+  }
+  if (forcePasswordSync) {
+    adminProvisionPromise = undefined;
   }
   if (!adminProvisionPromise) {
     adminProvisionPromise = (async () => {
@@ -415,6 +418,7 @@ app.post("/api/auth/resend-verification", authLimit, async (req, res, next) => {
 
 app.post("/api/auth/login", authLimit, async (req, res, next) => {
   try {
+    await ensureInitialAdmin(true);
     const email = validEmail(req.body.email) ? req.body.email.trim().toLowerCase() : "";
     const password = typeof req.body.password === "string" ? req.body.password : "";
     const user = email ? await db.get("SELECT * FROM users WHERE email = ? AND status = 'active'", email) : null;
@@ -584,6 +588,8 @@ const cleanPageRoutes = {
   verify: "verify.html",
   track: "track.html",
   admin: "admin.html",
+  "admin-login": "admin-login.html",
+  manage: "admin-login.html",
   judge: "judge.html",
   "forgot-password": "forgot-password.html",
   "reset-password": "reset-password.html",

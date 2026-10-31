@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#10120d">
+    <title>NLQI Admin — Sign in</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/api-client.js" defer></script>
+  </head>
+  <body class="apply-page portal-page register-page">
+    <header class="site-header apply-header">
+      <a class="brand" href="/" aria-label="NLQI home">
+        <img class="brand-logo" src="/images/nlqi-logo.png" alt="">
+        <span>NIGERIA LEGACY QUEEN<br>INTERNATIONAL</span>
+      </a>
+      <a class="apply-home-link" href="/">Return to website <span>↖</span></a>
+    </header>
+    <main>
+      <section class="apply-intro">
+        <div class="apply-intro-inner">
+          <div class="apply-intro-copy">
+            <p class="eyebrow"><span></span> ADMINISTRATOR ACCESS</p>
+            <h1>NLQI<br><em>Control Desk.</em></h1>
+            <p>Sign in to review applicants, update application status, view payments and manage the programme.</p>
+          </div>
+        </div>
+      </section>
+      <div class="apply-shell">
+        <section class="application-card portal-card" style="max-width:520px">
+          <div class="register-card-heading">
+            <span class="apply-overline">SECURE SIGN IN</span>
+            <h2>Administrator login.</h2>
+          </div>
+          <form id="admin-login-form">
+            <label class="form-field">Email<input name="email" type="email" autocomplete="username" required></label>
+            <label class="form-field">Password<input name="password" type="password" autocomplete="current-password" required></label>
+            <button class="button button-dark register-submit" type="submit">Open admin desk <span>↗</span></button>
+            <div class="form-feedback" id="admin-login-message" aria-live="polite"></div>
+          </form>
+        </section>
+      </div>
+    </main>
+    <script>
+      document.querySelector("#admin-login-form").addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const form = event.currentTarget;
+        const fields = new FormData(form);
+        const message = document.querySelector("#admin-login-message");
+        try {
+          const result = await window.nlqiApi.request("/api/auth/login", {
+            method: "POST",
+            body: { email: fields.get("email"), password: fields.get("password") },
+          });
+          if (result.user?.role === "admin") window.location.assign("/admin");
+          else {
+            message.textContent = "This account does not have administrator access.";
+            message.classList.add("error", "show");
+          }
+        } catch (error) {
+          message.textContent = error.message;
+          message.classList.add("error", "show");
+        }
+      });
+    </script>
+  </body>
+</html>
