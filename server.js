@@ -7,7 +7,7 @@ const path = require("node:path");
 const crypto = require("node:crypto");
 const fs = require("node:fs");
 const db = require("./backend/database");
-const { sendMail, emailConfigured, emailFrom } = require("./backend/email");
+const { sendMail, emailConfigured, emailFrom, registrationPaymentTemplate } = require("./backend/email");
 
 const app = express();
 const host = process.env.HOST || "0.0.0.0";

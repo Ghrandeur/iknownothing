@@ -395,7 +395,8 @@ export async function submitApplicationAction(): Promise<ActionResult> {
     subject: "NLQI Application Submitted",
     html: applicationSubmittedTemplate(
       `${application.firstName} ${application.lastName}`,
-      application.applicationNumber
+      application.applicationNumber,
+      PUBLIC_URL
     ),
   });
 
@@ -639,7 +640,8 @@ export async function updateApplicationStatusAction({
     html: statusUpdateTemplate(
       `${application.firstName} ${application.lastName}`,
       application.applicationNumber,
-      status
+      status,
+      PUBLIC_URL
     ),
   });
 

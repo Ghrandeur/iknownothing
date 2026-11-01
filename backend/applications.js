@@ -175,7 +175,12 @@ module.exports = function configureApplicationRoutes({
           const message = `Your application ${application.application_number} has been submitted and is awaiting review.`;
           let emailStatus = "sent";
           try {
-            const delivery = await sendNotificationEmail(req.user.email, "Your NLQI application has been submitted", `Hello ${req.user.name},\n\n${message}\n\nYou can review your status at ${appUrl}/track.`);
+            const delivery = await sendNotificationEmail(
+              req.user.email,
+              "Complete your NLQI registration and reserve your contest space",
+              `Hello ${req.user.name},\n\nYour application ${application.application_number} has been received. Complete registration and payment at: https://rigitix.com/nigeria-legacy-queen-international/register`,
+              registrationPaymentTemplate(req.user.name, application.application_number, `${appUrl}/images/nlqi-logo.png`),
+            );
             emailStatus = delivery?.mode === "development-console" ? "development-console" : "sent";
           } catch (emailError) {
             emailStatus = "failed";
@@ -369,7 +374,15 @@ module.exports = function configureApplicationRoutes({
       });
       let emailStatus = "sent";
       try {
-        const delivery = await sendNotificationEmail(row.email, `NLQI application update: ${label}`, `Hello ${row.name},\n\n${message}\n\nSign in to view your application status.`);
+        const isApproved = status === "approved";
+        const delivery = await sendNotificationEmail(
+          row.email,
+          isApproved ? "Complete your NLQI registration and reserve your contest space" : `NLQI application update: ${label}`,
+          isApproved
+            ? `Hello ${row.name},\n\n${message}\n\nComplete registration and payment at: https://rigitix.com/nigeria-legacy-queen-international/register`
+            : `Hello ${row.name},\n\n${message}\n\nSign in to view your application status.`,
+          isApproved ? registrationPaymentTemplate(row.name, row.application_number, `${appUrl}/images/nlqi-logo.png`) : null,
+        );
         emailStatus = delivery?.mode === "development-console" ? "development-console" : "sent";
       } catch (emailError) {
         emailStatus = "failed";
