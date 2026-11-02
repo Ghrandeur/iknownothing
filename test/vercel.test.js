@@ -14,9 +14,11 @@ test("Vercel serves the public site and routes API requests to the Node function
   assert.deepEqual(config.routes, [
     { src: "/api/(.*)", dest: "/api/index.js" },
     { src: "/index\\.html$", status: 308, dest: "/" },
-    { src: "/(apply|register|login|verify|track|admin|admin-login|manage|judge|forgot-password|reset-password|contact|privacy|blog|blog-post|gallery)\\.html$", status: 308, dest: "/$1" },
+    { src: "/(registration|register|login|verify|track|admin|admin-login|manage|judge|forgot-password|reset-password|contact|privacy|blog|blog-post|gallery)\\.html$", status: 308, dest: "/$1" },
+    { src: "/apply\\.html$", status: 308, dest: "/registration" },
+    { src: "/apply/?$", status: 308, dest: "/registration" },
     { src: "/", dest: "/public/index.html" },
-    { src: "/apply/?$", dest: "/public/apply.html" },
+    { src: "/registration/?$", dest: "/public/registration.html" },
     { src: "/register/?$", dest: "/public/register.html" },
     { src: "/login/?$", dest: "/public/login.html" },
     { src: "/verify/?$", dest: "/public/verify.html" },
@@ -45,9 +47,10 @@ test("Vercel serves the public site and routes API requests to the Node function
     assert.match(vercelIgnore, new RegExp(`^${ignoredPath.replace(".", "\\.")}$`, "m"), `deployment should exclude ${ignoredPath}`);
   }
   assert.equal(config.builds.some(({ use }) => use === "@vercel/node"), true);
-  for (const page of ["apply", "register", "login", "verify", "track", "admin", "judge", "forgot-password", "reset-password", "contact", "privacy", "blog", "blog-post", "gallery"]) {
+  for (const page of ["registration", "register", "login", "verify", "track", "admin", "judge", "forgot-password", "reset-password", "contact", "privacy", "blog", "blog-post", "gallery"]) {
     assert.ok(config.routes.some(({ src, dest }) => src === `/${page}/?$` && dest === `/public/${page}.html`), `missing clean URL route for /${page}`);
   }
+  assert.ok(config.routes.some(({ src, dest, status }) => src === "/apply/?$" && dest === "/registration" && status === 308));
   assert.ok(config.routes.some(({ src, dest }) => src === "/admin-login/?$" && dest === "/public/admin-login.html"));
   assert.ok(config.routes.some(({ src, dest }) => src === "/manage/?$" && dest === "/public/admin-login.html"));
 });
