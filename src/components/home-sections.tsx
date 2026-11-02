@@ -77,7 +77,7 @@ export function HeroSection() {
           </motion.p>
           <motion.div variants={fadeUp} className="mt-9 flex flex-wrap gap-3">
             <Link
-              href="/apply"
+              href="/registration"
               className="group inline-flex items-center gap-3 rounded-full bg-nlqi-gold px-6 py-4 text-[11px] font-bold uppercase tracking-[0.13em] text-nlqi-green transition hover:bg-nlqi-gold-light"
             >
               Register now
@@ -560,7 +560,7 @@ export function RegistrationSection() {
               <strong className="block text-nlqi-green">Important notice</strong>
               Provide accurate information, complete every required section, and submit valid evidence of payment. Registration does not guarantee automatic selection; shortlisted applicants will be contacted through their registered details.
             </div>
-            <Link href="/apply" className="mt-8 inline-flex items-center gap-3 rounded-full bg-nlqi-green px-6 py-4 text-[10px] font-bold uppercase tracking-[0.14em] text-white transition hover:bg-nlqi-green-dark">
+            <Link href="/registration" className="mt-8 inline-flex items-center gap-3 rounded-full bg-nlqi-green px-6 py-4 text-[10px] font-bold uppercase tracking-[0.14em] text-white transition hover:bg-nlqi-green-dark">
               Begin registration <ArrowUpRight className="h-4 w-4" />
             </Link>
           </div>
@@ -672,7 +672,7 @@ export function ApplyCTA() {
           </p>
         </div>
         <Link
-          href="/apply"
+          href="/registration"
           className="group inline-flex shrink-0 items-center gap-4 self-start rounded-full bg-nlqi-gold px-7 py-4 text-[10px] font-bold uppercase tracking-[0.14em] text-nlqi-green transition hover:bg-nlqi-gold-light md:self-auto"
         >
 Register for NLQI 2027

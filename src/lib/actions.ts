@@ -96,22 +96,13 @@ export async function registerAction(formData: FormData): Promise<ActionResult> 
       .insert(users)
       .values({
         email: email.toLowerCase(),
+        name: `${firstName} ${lastName}`.trim(),
+        phone,
         passwordHash: hash,
         role: "applicant",
         emailToken,
       })
       .returning();
-
-    const appNumber = await generateUniqueApplicationNumber();
-    await db.insert(applications).values({
-      userId: user.id,
-      applicationNumber: appNumber,
-      firstName,
-      lastName,
-      email: email.toLowerCase(),
-      phone,
-      status: "draft",
-    });
 
     const verifyLink = `${PUBLIC_URL}/verify-email?token=${emailToken}`;
     await sendEmail({

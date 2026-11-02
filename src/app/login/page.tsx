@@ -21,7 +21,7 @@ export default function LoginPage() {
     setLoading(false);
     if (res.success) {
       const data = res.data as { role: string } | undefined;
-      router.push(data?.role === "admin" ? "/admin" : "/apply");
+      if (data?.role === "admin") router.push("/admin"); else window.location.assign("https://rigitix.com/nigeria-legacy-queen-international/register");
     } else {
       setError((res as { error?: string }).error || "Login failed");
     }

@@ -154,7 +154,7 @@
         const card = element("article", "admin-app-card");
         const heading = element("div", "admin-app-heading");
         heading.append(element("h3", "", user.name), element("span", "", user.email));
-        const detail = element("p", "", `${user.role} · ${user.status} · Email ${user.emailVerified ? "verified" : "unverified"} · Applications: ${user.applicationCount}`);
+        const detail = element("p", "", `${user.role} · ${user.status} · Phone: ${user.phone || "Not provided"} · Email ${user.emailVerified ? "verified" : "unverified"} · Applications: ${user.applicationCount}`);
         card.append(heading, detail);
         if (user.role === "admin" || user.id === window.nlqiCurrentUserId) {
           root.append(card);
@@ -532,4 +532,5 @@
   }
 
   renderContentForm();
+  loadUsers();
 })();

@@ -20,7 +20,7 @@ export function Footer() {
               Mental Renaissance. More than a crown—it is a legacy. We empower Nigerian women
               to lead with intellect, purpose, advocacy and lasting impact.
             </p>
-            <Link href="/apply" className="inline-flex items-center gap-2 text-sm font-semibold text-nlqi-gold hover:text-nlqi-gold-light">
+            <Link href="/registration" className="inline-flex items-center gap-2 text-sm font-semibold text-nlqi-gold hover:text-nlqi-gold-light">
               Become part of the story <ArrowUpRight className="w-4 h-4" />
             </Link>
           </div>
@@ -29,7 +29,7 @@ export function Footer() {
             <h4 className="text-white font-semibold mb-4 uppercase tracking-wider text-sm">Quick Links</h4>
             <ul className="space-y-3 text-white/90 text-sm">
               <li><Link href="/" className="hover:text-white transition-colors">Home</Link></li>
-              <li><Link href="/apply" className="hover:text-white transition-colors">Apply</Link></li>
+              <li><Link href="/registration" className="hover:text-white transition-colors">Apply</Link></li>
               <li><Link href="/track" className="hover:text-white transition-colors">Track Application</Link></li>
               <li><Link href="/gallery" className="hover:text-white transition-colors">Gallery</Link></li>
               <li><Link href="/blog" className="hover:text-white transition-colors">Blog</Link></li>

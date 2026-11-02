@@ -180,7 +180,7 @@ module.exports = function configureAdminRoutes({
 
   app.get("/api/admin/users", ...admin, async (req, res) => {
     const users = (await db.all(`
-      SELECT u.id, u.name, u.email, u.role, u.status, u.email_verified AS emailVerified,
+      SELECT u.id, u.name, u.phone, u.email, u.role, u.status, u.email_verified AS emailVerified,
         u.created_at AS createdAt, COUNT(DISTINCT a.id) AS applicationCount
       FROM users u LEFT JOIN applications a ON a.user_id = u.id
       GROUP BY u.id ORDER BY u.created_at DESC LIMIT 250

@@ -72,7 +72,7 @@ export function Navbar({
               </>
             ) : (
               <Link
-                href="/apply"
+                href="/registration"
                 className="inline-flex items-center gap-2 px-5 py-3 text-[11px] font-bold tracking-[0.12em] uppercase text-nlqi-green bg-nlqi-gold hover:bg-nlqi-gold-light transition-colors rounded-full"
               >
                 Apply Now <ArrowUpRight className="h-4 w-4" />
@@ -128,7 +128,7 @@ export function Navbar({
                 </>
               ) : (
                 <Link
-                  href="/apply"
+                  href="/registration"
                   onClick={() => setOpen(false)}
                   className="inline-flex items-center gap-2 px-5 py-3 text-nlqi-green bg-nlqi-gold rounded-full font-semibold"
                 >

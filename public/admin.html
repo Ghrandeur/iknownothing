@@ -33,16 +33,15 @@
         <div class="portal-metrics" id="admin-metrics"></div>
       </section>
       <nav class="admin-tabs" aria-label="Administration sections">
-        <button type="button" class="active" data-admin-view="applications">Applications</button>
         <button type="button" data-admin-view="judges">Judges & scoring</button>
-        <button type="button" data-admin-view="users">Users</button>
+        <button type="button" class="active" data-admin-view="users">Registered participants</button>
         <button type="button" data-admin-view="analytics">Analytics</button>
         <button type="button" data-admin-view="content">Site content</button>
         <button type="button" data-admin-view="finance">Finance</button>
         <button type="button" data-admin-view="audit">Audit logs</button>
         <button type="button" data-admin-view="settings">Settings</button>
       </nav>
-      <section class="application-card portal-card admin-view" id="admin-applications-view">
+      <section class="application-card portal-card admin-view" id="admin-applications-view" hidden>
         <div class="admin-toolbar">
           <form id="admin-filter" class="admin-filter">
             <label class="form-field">Search<input id="filter-search" placeholder="Name, email or reference"></label>
@@ -72,9 +71,9 @@
         </form>
         <div id="scoring-summary" class="admin-app-list"></div>
       </section>
-      <section class="application-card portal-card admin-view" id="admin-users-view" hidden>
-        <h2>Account management</h2>
-        <p>Manage applicant and judge access. Administrator privileges are managed through the server environment.</p>
+      <section class="application-card portal-card admin-view" id="admin-users-view">
+        <h2>Registered participants</h2>
+        <p>Account details collected at NLQI registration: name, phone number, email and account status.</p>
         <div id="admin-users" class="admin-app-list"></div>
       </section>
       <section class="application-card portal-card admin-view" id="admin-analytics-view" hidden>

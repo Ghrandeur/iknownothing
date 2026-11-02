@@ -68,7 +68,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               “Beauty becomes powerful when purpose gives it direction.”
             </p>
             <Link
-              href="/apply"
+              href="/registration"
               className="mt-8 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.14em] text-nlqi-green"
             >
               Find your place in the story <ArrowUpRight className="h-4 w-4" />

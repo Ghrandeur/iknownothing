@@ -210,7 +210,7 @@ function deliveryStatus(result) {
 }
 
 function publicUser(user) {
-  return { id: user.id, name: user.name, email: user.email, role: user.role, emailVerified: Boolean(user.email_verified) };
+  return { id: user.id, name: user.name, phone: user.phone || "", email: user.email, role: user.role, emailVerified: Boolean(user.email_verified) };
 }
 
 let adminProvisionPromise;
@@ -319,10 +319,11 @@ app.get("/api/csrf", (_req, res) => res.json({ token: issueCsrf(res) }));
 app.post("/api/auth/register", authLimit, async (req, res, next) => {
   try {
     const name = cleanText(req.body.name, 120);
+    const phone = cleanText(req.body.phone, 40);
     const email = validEmail(req.body.email) ? req.body.email.trim().toLowerCase() : "";
     const password = req.body.password;
-    if (name.length < 2 || !email || typeof password !== "string" || password.length < 12 || password.length > 128) {
-      throw apiError(400, "Enter your name, a valid email, and a password of at least 12 characters.");
+    if (name.length < 2 || phone.length < 7 || !email || typeof password !== "string" || password.length < 12 || password.length > 128) {
+      throw apiError(400, "Enter your name, phone number, a valid email, and a password of at least 12 characters.");
     }
     if (await db.get("SELECT 1 FROM users WHERE email = ?", email)) {
       throw apiError(409, "An account already exists for this email. Try signing in or resetting your password.");
@@ -334,16 +335,11 @@ app.post("/api/auth/register", authLimit, async (req, res, next) => {
     const now = Date.now();
     const userId = await db.transaction(async () => {
       const result = await db.run(`
-        INSERT INTO users (email, name, password_hash, role, status, email_verified, email_verify_hash, created_at, updated_at)
-        VALUES (?, ?, ?, 'applicant', 'active', 0, ?, ?, ?)
-      `, email, name, passwordHash, hashToken(token), now, now);
+        INSERT INTO users (email, name, phone, password_hash, role, status, email_verified, email_verify_hash, created_at, updated_at)
+        VALUES (?, ?, ?, ?, 'applicant', 'active', 0, ?, ?, ?)
+      `, email, name, phone, passwordHash, hashToken(token), now, now);
       const userId = Number(result.id);
-      const applicationNumber = `NLQI-${now.toString(36).toUpperCase()}-${crypto.randomBytes(3).toString("hex").toUpperCase()}`;
-      await db.run(`
-        INSERT INTO applications (user_id, application_number, status, payment_status, data_json, uploads_json, created_at, updated_at)
-        VALUES (?, ?, 'draft', 'unpaid', '{}', '{}', ?, ?)
-      `, userId, applicationNumber, now, now);
-      await notify(userId, "account", "Welcome to NLQI", "Your applicant account is ready. Verify your email to continue your application.");
+      await notify(userId, "account", "Welcome to NLQI", "Your account is ready. Continue to the official NLQI 2027 registration.");
       await audit(userId, "applicant.registered", "user", userId);
       return userId;
     });

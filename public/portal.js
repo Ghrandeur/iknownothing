@@ -40,9 +40,12 @@ if (registerForm) {
     }
     const result = await formRequest(registerForm, "/api/auth/register", {
       method: "POST",
-      body: { name: fields.get("name"), email: fields.get("email"), password: fields.get("password") },
+      body: { name: fields.get("name"), phone: fields.get("phone"), email: fields.get("email"), password: fields.get("password") },
     });
-    if (result) registerForm.reset();
+    if (result) {
+      registerForm.reset();
+      window.location.href = "https://rigitix.com/nigeria-legacy-queen-international/register";
+    }
   });
 }
 
@@ -72,7 +75,7 @@ if (loginForm) {
     if (result?.user) {
       window.location.href = result.user.role === "admin"
         ? "/admin"
-        : result.user.role === "judge" ? "/judge" : "/track";
+        : result.user.role === "judge" ? "/judge" : "https://rigitix.com/nigeria-legacy-queen-international/register";
     }
   });
 }

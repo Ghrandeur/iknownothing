@@ -22,7 +22,7 @@ export default function RegisterPage() {
     setLoading(false);
     if (res.success) {
       setSuccess(res.message || "Account created");
-      setTimeout(() => router.push("/login"), 2000);
+      setTimeout(() => window.location.assign("https://rigitix.com/nigeria-legacy-queen-international/register"), 500);
     } else {
       setError((res as { error?: string }).error || "Registration failed");
     }

@@ -60,7 +60,7 @@ if (usePostgres) {
   sqlite.exec(`
     CREATE TABLE IF NOT EXISTS users (
       id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT NOT NULL UNIQUE COLLATE NOCASE,
-      name TEXT NOT NULL, password_hash TEXT NOT NULL, role TEXT NOT NULL DEFAULT 'applicant'
+      name TEXT NOT NULL, phone TEXT NOT NULL DEFAULT '', password_hash TEXT NOT NULL, role TEXT NOT NULL DEFAULT 'applicant'
         CHECK (role IN ('applicant', 'admin', 'judge')), status TEXT NOT NULL DEFAULT 'active'
         CHECK (status IN ('active', 'suspended')), email_verified INTEGER NOT NULL DEFAULT 0,
       email_verify_hash TEXT, reset_token_hash TEXT, reset_expires INTEGER,
@@ -137,6 +137,10 @@ if (usePostgres) {
       sort_order INTEGER NOT NULL DEFAULT 0, created_at INTEGER NOT NULL, updated_at INTEGER NOT NULL
     );
   `);
+  const userColumns = sqlite.prepare("PRAGMA table_info(users)").all();
+  if (!userColumns.some((column) => column.name === "phone")) {
+    sqlite.exec("ALTER TABLE users ADD COLUMN phone TEXT NOT NULL DEFAULT ''");
+  }
 }
 
 function activateSQLiteFallback() {
@@ -153,7 +157,7 @@ function activateSQLiteFallback() {
   sqlite.pragma("foreign_keys = ON");
   sqlite.pragma("busy_timeout = 5000");
   sqlite.exec(`
-    CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT NOT NULL UNIQUE, name TEXT NOT NULL, password_hash TEXT NOT NULL, role TEXT NOT NULL DEFAULT 'applicant', status TEXT NOT NULL DEFAULT 'active', email_verified INTEGER NOT NULL DEFAULT 0, email_verify_hash TEXT, reset_token_hash TEXT, reset_expires INTEGER, created_at INTEGER NOT NULL, updated_at INTEGER NOT NULL);
+    CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT NOT NULL UNIQUE, name TEXT NOT NULL, phone TEXT NOT NULL DEFAULT '', password_hash TEXT NOT NULL, role TEXT NOT NULL DEFAULT 'applicant', status TEXT NOT NULL DEFAULT 'active', email_verified INTEGER NOT NULL DEFAULT 0, email_verify_hash TEXT, reset_token_hash TEXT, reset_expires INTEGER, created_at INTEGER NOT NULL, updated_at INTEGER NOT NULL);
     CREATE TABLE IF NOT EXISTS sessions (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL, token_hash TEXT NOT NULL UNIQUE, expires_at INTEGER NOT NULL, created_at INTEGER NOT NULL);
     CREATE TABLE IF NOT EXISTS applications (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL UNIQUE, application_number TEXT NOT NULL UNIQUE, status TEXT NOT NULL DEFAULT 'draft', payment_status TEXT NOT NULL DEFAULT 'unpaid', current_step INTEGER NOT NULL DEFAULT 1, data_json TEXT NOT NULL DEFAULT '{}', uploads_json TEXT NOT NULL DEFAULT '{}', submitted_at INTEGER, created_at INTEGER NOT NULL, updated_at INTEGER NOT NULL);
     CREATE TABLE IF NOT EXISTS notifications (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL, type TEXT NOT NULL, title TEXT NOT NULL, message TEXT NOT NULL, read INTEGER NOT NULL DEFAULT 0, created_at INTEGER NOT NULL);

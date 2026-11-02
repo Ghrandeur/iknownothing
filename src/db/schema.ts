@@ -35,6 +35,8 @@ export const sponsorTierEnum = pgEnum("sponsor_tier", [
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   email: varchar("email", { length: 255 }).notNull().unique(),
+  name: varchar("name", { length: 120 }).notNull().default(""),
+  phone: varchar("phone", { length: 40 }).notNull().default(""),
   passwordHash: varchar("password_hash", { length: 255 }).notNull(),
   role: userRoleEnum("role").notNull().default("applicant"),
   status: userStatusEnum("status").notNull().default("active"),
