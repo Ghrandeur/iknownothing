@@ -309,7 +309,7 @@ app.use("/api", async (_req, _res, next) => {
 app.get("/api/health", async (_req, res) => {
   try {
     await db.health();
-    res.json({ ok: true, service: "nlqi-api", database: db.provider, adminConfigured: Boolean(process.env.ADMIN_EMAIL && process.env.ADMIN_PASSWORD && process.env.ADMIN_NAME) });
+    res.json({ ok: true, service: "nlqi-api", database: db.provider, persistentDatabase: !process.env.VERCEL || Boolean(process.env.SUPABASE_DB_URL), adminConfigured: Boolean(process.env.ADMIN_EMAIL && process.env.ADMIN_PASSWORD && process.env.ADMIN_NAME) });
   } catch (error) {
     res.status(503).json({ ok: false, service: "nlqi-api", database: db.provider, error: "Database connection unavailable",     detail: `${error.code || "DB_ERROR"}: ${error.message || "Unknown database error"}` });
   }

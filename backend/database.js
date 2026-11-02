@@ -5,6 +5,10 @@ const { AsyncLocalStorage } = require("node:async_hooks");
 let usePostgres = Boolean(process.env.SUPABASE_DB_URL);
 const transactions = new AsyncLocalStorage();
 
+if (process.env.VERCEL && !usePostgres) {
+  throw new Error("Persistent database configuration is required on Vercel. Configure SUPABASE_DB_URL.");
+}
+
 function normalizePostgresSql(sql) {
   return sql
     .replace(/\bCOLLATE\s+NOCASE\b/gi, "")
@@ -144,6 +148,9 @@ if (usePostgres) {
 }
 
 function activateSQLiteFallback() {
+  if (process.env.VERCEL) {
+    throw new Error("Database connection unavailable. Persistent PostgreSQL is required on Vercel.");
+  }
   if (sqlite) {
     usePostgres = false;
     return;
