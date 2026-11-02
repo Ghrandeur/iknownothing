@@ -170,6 +170,22 @@ test("account creation stores participant details in the admin portal", async ()
     body: JSON.stringify({ email: "applicant@example.test", password: "Strong-Test-Password-456" }),
   });
   assert.equal(login.status, 200);
+
+  const logout = await applicant.request("/api/auth/logout", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({}),
+  });
+  assert.equal(logout.status, 200);
+
+  const reloginClient = createClient();
+  const relogin = await reloginClient.request("/api/auth/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email: "applicant@example.test", password: "Strong-Test-Password-456" }),
+  });
+  assert.equal(relogin.status, 200, "participant password should work after logout and login");
+
   const adminSeed = spawnSync(process.execPath, ["backend/seed-admin.js"], {
     cwd: projectRoot,
     encoding: "utf8",

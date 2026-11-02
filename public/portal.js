@@ -14,6 +14,8 @@ async function gateRegistrationPage() {
       window.location.href = "/admin";
     } else if (result.user.role === "judge") {
       window.location.href = "/judge";
+    } else {
+      document.querySelector("#registration-logout")?.removeAttribute("hidden");
     }
   } catch (_error) {
     window.location.href = "/login";
@@ -21,6 +23,15 @@ async function gateRegistrationPage() {
 }
 
 gateRegistrationPage();
+
+document.querySelector("#registration-logout")?.addEventListener("click", async () => {
+  try {
+    await api.request("/api/auth/logout", { method: "POST", body: {} });
+    window.location.href = "/login";
+  } catch (error) {
+    window.location.href = "/login";
+  }
+});
 
 function showPortalMessage(message, error = false) {
   api.displayMessage(document.querySelector("[data-message]"), message, error);
