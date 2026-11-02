@@ -2,6 +2,26 @@ const api = window.nlqiApi;
 const yearLabel = document.querySelector("#year");
 if (yearLabel) yearLabel.textContent = String(new Date().getFullYear());
 
+async function gateRegistrationPage() {
+  if (!document.body.classList.contains("contestant-registration-page")) return;
+  try {
+    const result = await api.request("/api/auth/me");
+    if (!result.user.emailVerified) {
+      window.location.href = "/login";
+      return;
+    }
+    if (result.user.role === "admin") {
+      window.location.href = "/admin";
+    } else if (result.user.role === "judge") {
+      window.location.href = "/judge";
+    }
+  } catch (_error) {
+    window.location.href = "/login";
+  }
+}
+
+gateRegistrationPage();
+
 function showPortalMessage(message, error = false) {
   api.displayMessage(document.querySelector("[data-message]"), message, error);
 }
@@ -44,7 +64,7 @@ if (registerForm) {
     });
     if (result) {
       registerForm.reset();
-      window.location.href = "https://rigitix.com/nigeria-legacy-queen-international/register";
+      showPortalMessage("Account created successfully. Check your email, verify your account, then sign in to continue.");
     }
   });
 }
@@ -75,7 +95,7 @@ if (loginForm) {
     if (result?.user) {
       window.location.href = result.user.role === "admin"
         ? "/admin"
-        : result.user.role === "judge" ? "/judge" : "https://rigitix.com/nigeria-legacy-queen-international/register";
+        : result.user.role === "judge" ? "/judge" : "/registration";
     }
   });
 }
