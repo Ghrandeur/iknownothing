@@ -827,3 +827,46 @@ img { display: block; max-width: 100%; }
   .admin-overview-heading { display: grid; }
   .admin-page .portal-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+.contestant-registration-page { background: #f2f0e9; }
+.registration-page-main { width: min(var(--page-width), calc(100% - 48px)); margin: 0 auto 48px; }
+.registration-hero { display: grid; grid-template-columns: minmax(320px, .9fr) minmax(430px, 1.1fr); background: #fff; border: 1px solid rgba(0,77,43,.12); box-shadow: 0 24px 70px rgba(0,50,29,.12); }
+.registration-poster-wrap { min-height: 720px; background: #073b26; }
+.registration-poster { width: 100%; height: 100%; max-height: 980px; object-fit: cover; object-position: center; }
+.registration-content { padding: clamp(38px, 5vw, 72px); }
+.registration-title { padding-bottom: 28px; border-bottom: 1px solid rgba(0,77,43,.12); }
+.registration-title h1 { max-width: 720px; margin: 18px 0 14px; color: var(--night); font-family: Georgia, serif; font-size: clamp(38px, 4.5vw, 64px); line-height: .98; letter-spacing: -.04em; }
+.registration-title h1 span { color: var(--lime); }
+.registration-theme, .registration-slogan { margin: 6px 0; font-size: clamp(14px, 1.2vw, 18px); letter-spacing: .08em; }
+.registration-content section { padding-top: 28px; }
+.registration-content section h2 { margin: 0 0 14px; color: var(--night); font-size: 14px; letter-spacing: .16em; }
+.registration-content section p { color: #4c5049; line-height: 1.75; }
+.registration-fee-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.registration-fee-grid div { padding: 18px; border-radius: 10px; background: #f7f4ea; border-left: 3px solid var(--lime); }
+.registration-fee-grid span, .registration-fee-grid strong, .registration-fee-grid p { display: block; margin: 0; }
+.registration-fee-grid span { color: var(--night); font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
+.registration-fee-grid strong { margin-top: 7px; font-family: Georgia, serif; font-size: 18px; }
+.registration-fee-grid p { margin-top: 6px; color: var(--night); font-weight: 800; }
+.registration-content ul { margin: 0; padding-left: 20px; }
+.registration-content li { margin: 9px 0; color: #4c5049; line-height: 1.55; }
+.registration-notice { margin-top: 28px; padding: 24px; border-radius: 12px; background: var(--night); }
+.registration-notice h2 { color: var(--lime-dark)!important; }
+.registration-notice p { margin: 0 0 8px; color: rgba(255,255,255,.82)!important; }
+.registration-journey { text-align: center; }
+.registration-journey h2 { margin-bottom: 10px!important; }
+.registration-journey p { margin: 4px 0; }
+.continue-registration-button { display: inline-flex; align-items: center; justify-content: center; gap: 12px; margin-top: 22px; padding: 17px 24px; border-radius: 999px; background: var(--night); color: #fff; font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.continue-registration-button span { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--lime); color: var(--night); }
+.continue-registration-button:hover { background: var(--night-soft); }
+@media (max-width: 900px) {
+  .registration-page-main { width: min(100% - 28px, 720px); }
+  .registration-hero { grid-template-columns: 1fr; }
+  .registration-poster-wrap { min-height: 0; }
+  .registration-poster { max-height: none; aspect-ratio: 4 / 5; }
+}
+@media (max-width: 560px) {
+  .registration-page-main { width: calc(100% - 20px); }
+  .registration-content { padding: 28px 20px; }
+  .registration-fee-grid { grid-template-columns: 1fr; }
+  .registration-title h1 { font-size: 38px; }
+}

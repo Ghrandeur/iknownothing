@@ -589,7 +589,7 @@ app.post("/api/payments/webhook", async (req, res, next) => {
 app.use("/api", (_req, _res, next) => next(apiError(404, "API endpoint not found.")));
 
 const cleanPageRoutes = {
-  apply: "apply.html",
+  registration: "registration.html",
   register: "register.html",
   login: "login.html",
   verify: "verify.html",
@@ -608,6 +608,10 @@ const cleanPageRoutes = {
   "blog-post": "blog-post.html",
   gallery: "gallery.html",
 };
+
+app.get("/apply", (_req, res) => {
+  res.redirect(302, "/registration");
+});
 
 for (const [route, file] of Object.entries(cleanPageRoutes)) {
   app.get(`/${route}`, (_req, res, next) => {
